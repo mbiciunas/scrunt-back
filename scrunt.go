@@ -7,34 +7,18 @@ import (
 	"io/fs"
 	"log"
 	"net/http"
+	"scrunt-back/startup"
 )
 
 //go:embed frontend
 var embededFiles embed.FS
 
 func main() {
-	fmt.Println("*************************************")
-	files, err := embededFiles.ReadDir("frontend")
-	if err != nil {
-		log.Fatal(err)
-	}
+	startup.ListFiles(embededFiles)
 
-	for _, file := range files {
-		fmt.Println(file.Name(), file.IsDir(), file.Type())
-	}
+	startup.ListFilesAll(embededFiles)
 
-	fmt.Println("*************************************")
-
-	if err := run(); err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println("*************************************")
-
-	err = browser.OpenURL("http://localhost:8080")
-	if err != nil {
-		return
-	}
+	openBrowser()
 
 	fileServer := http.FileServer(getFileSystem()) // New code
 	http.Handle("/", fileServer)                   // New code
@@ -45,6 +29,13 @@ func main() {
 	}
 }
 
+func openBrowser() {
+	err := browser.OpenURL("http://localhost:8080")
+	if err != nil {
+		return
+	}
+}
+
 func getFileSystem() http.FileSystem {
 	fsys, err := fs.Sub(embededFiles, "frontend")
 	if err != nil {
@@ -52,14 +43,4 @@ func getFileSystem() http.FileSystem {
 	}
 
 	return http.FS(fsys)
-}
-
-func run() error {
-	return fs.WalkDir(embededFiles, ".", func(path string, d fs.DirEntry, err error) error {
-		if err != nil {
-			return err
-		}
-		fmt.Printf("path=%q, isDir=%v\n", path, d.IsDir())
-		return nil
-	})
 }
