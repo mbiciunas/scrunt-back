@@ -18,7 +18,9 @@ func main() {
 
 	startup.ListFilesAll(embededFiles)
 
-	openBrowser()
+	startup.OpenFile(embededFiles)
+
+	//openBrowser()
 
 	fileServer := http.FileServer(getFileSystem()) // New code
 	http.Handle("/", fileServer)                   // New code

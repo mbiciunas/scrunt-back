@@ -31,6 +31,20 @@ func ListFilesAll(embededFiles embed.FS) {
 	fmt.Println("*************************************")
 }
 
+func OpenFile(embededFiles embed.FS) {
+	fmt.Println("*************************************")
+
+	file, err := embededFiles.ReadFile("frontend/index.html")
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(string(file))
+
+	fmt.Println("*************************************")
+}
+
 func run(embededFiles embed.FS) error {
 	return fs.WalkDir(embededFiles, ".", func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
