@@ -14,16 +14,21 @@ import (
 var embededFiles embed.FS
 
 func main() {
-	startup.ListFiles(embededFiles)
+	startup.MakeDirectory()
 
 	startup.ListFilesAll(embededFiles)
 
-	startup.OpenFile(embededFiles)
+	//startup.OpenFile(embededFiles)
+
+	startup.CurrentDirectory()
+
+	//startup.WriteFile(embededFiles)
 
 	//openBrowser()
 
-	fileServer := http.FileServer(getFileSystem()) // New code
-	http.Handle("/", fileServer)                   // New code
+	//fileServer := http.FileServer(getFileSystem()) // New code
+	fileServer := http.FileServer(http.Dir("./.scrunt/front")) // New code
+	http.Handle("/", fileServer)                               // New code
 
 	fmt.Printf("Starting server at port 8080\n")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
