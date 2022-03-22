@@ -8,13 +8,18 @@ import (
 )
 
 const SCRUNT = ".scrunt"
-const FRONT = "front"
+const FRONT = "frontend"
 const PYTHON = "python"
 const DATABASE = "database"
 
+var pathScrunt = filepath.Join(SCRUNT)
 var pathFront = filepath.Join(SCRUNT, FRONT)
 var pathPython = filepath.Join(SCRUNT, PYTHON)
 var pathDatabase = filepath.Join(SCRUNT, DATABASE)
+
+func GetPathScrunt(filename string) string {
+	return filepath.Join(SCRUNT, filename)
+}
 
 func GetPathFront(filename string) string {
 	return filepath.Join(pathFront, filename)
@@ -51,7 +56,7 @@ func MakeDirectory() {
 		log.Println(err)
 	}
 
-	err = os.MkdirAll(pathPython, 0600)
+	err = os.MkdirAll(pathPython, 0700)
 	if err != nil {
 		log.Println(err)
 	}

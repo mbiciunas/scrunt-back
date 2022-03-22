@@ -28,7 +28,7 @@ func ListFilesAll(embeddedFiles embed.FS) {
 		fmt.Printf("path=%q, isDir=%v\n", path, d.IsDir())
 
 		if d.IsDir() {
-			err = os.MkdirAll(filepath.Join(pathFront, path), 0700)
+			err = os.MkdirAll(filepath.Join(pathScrunt, path), 0700)
 			if err != nil {
 				log.Println(err)
 			}
@@ -54,7 +54,8 @@ func WriteFile(embeddedFiles embed.FS, path string) {
 		fmt.Println(err)
 	}
 
-	err = ioutil.WriteFile(GetPathFront(path), file, 0644)
+	fmt.Println("Path: " + path + "  Directory: " + GetPathScrunt(path))
+	err = ioutil.WriteFile(GetPathScrunt(path), file, 0644)
 	//	err = ioutil.WriteFile("data.txt", file, 0644)
 
 	if err != nil {
@@ -64,30 +65,11 @@ func WriteFile(embeddedFiles embed.FS, path string) {
 	fmt.Println("*************************************")
 }
 
-//func WriteFile(embeddedFiles embed.FS, path string) {
-//	fmt.Println("Write File **************************")
-//
-//	file, err := embeddedFiles.ReadFile(path)
-//
-//	if err != nil {
-//		fmt.Println(err)
-//	}
-//
-//	err = ioutil.WriteFile(GetPathFront(path), file, 0644)
-//	//	err = ioutil.WriteFile("data.txt", file, 0644)
-//
-//	if err != nil {
-//		log.Fatal(err)
-//	}
-//
-//	fmt.Println("*************************************")
-//}
-
-func getFileSystem(embeddedFiles embed.FS) fs.FS {
-	fileSystem, err := fs.Sub(embeddedFiles, "frontend")
+func ExtractPython() {
+	pythonPath := filepath.Join(pathPython, "Python-3.7.12.tgz")
+	r, err := os.Open(pythonPath)
 	if err != nil {
-		panic(err)
+		fmt.Println("error")
 	}
-
-	return fileSystem
+	ExtractTarGz(pathPython, r)
 }
