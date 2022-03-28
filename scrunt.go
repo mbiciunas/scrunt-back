@@ -3,25 +3,34 @@ package main
 import (
 	"embed"
 	"fmt"
+	"github.com/DataDog/go-python3"
 	"github.com/pkg/browser"
-	"io/fs"
 	"log"
 	"net/http"
 	"scrunt-back/startup"
 )
 
-//go:embed frontend
+//go:embed frontend python
 var embededFiles embed.FS
 
 func main() {
-	startup.ListFiles(embededFiles)
+	startup.MakeDirectory()
 
 	startup.ListFilesAll(embededFiles)
 
-	openBrowser()
+	//startup.OpenFile(embededFiles)
 
-	fileServer := http.FileServer(getFileSystem()) // New code
-	http.Handle("/", fileServer)                   // New code
+	startup.CurrentDirectory()
+
+	startup.ExtractPython()
+	//startup.WriteFile(embededFiles)
+
+	python()
+
+	//openBrowser()
+
+	fileServer := http.FileServer(http.Dir("./.scrunt/frontend")) // New code
+	http.Handle("/", fileServer)                                  // New code
 
 	fmt.Printf("Starting server at port 8080\n")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
@@ -36,11 +45,24 @@ func openBrowser() {
 	}
 }
 
-func getFileSystem() http.FileSystem {
-	fsys, err := fs.Sub(embededFiles, "frontend")
+func python() {
+	pythonPath := startup.GetPathPython("./Python-3.7.12/lib/python3.7")
+	fmt.Println(pythonPath)
+
+	err := python3.Py_SetPath(pythonPath)
+	//err := python3.Py_SetPath("./python-3.7.12/lib/python3.7")
 	if err != nil {
-		panic(err)
+		return
 	}
 
-	return http.FS(fsys)
+	python3path, _ := python3.Py_GetPath()
+
+	fmt.Println("python3.Py_GetPath(): ", python3path)
+
+	python3.Py_Initialize()
+
+	python3.PyRun_SimpleString("print('hello world from simple')")
+	python3.PyRun_SimpleString("print('hello world from simple')")
+
+	python3.Py_Finalize()
 }
