@@ -46,7 +46,8 @@ func openBrowser() {
 }
 
 func python() {
-	pythonPath := startup.GetPathPython("./Python-3.7.12/lib/python3.7")
+	pythonPath := startup.GetPathPython("./lib/python3.7")
+	//pythonPath := startup.GetPathPython("./Python-3.7.12/lib/python3.7")
 	fmt.Println(pythonPath)
 
 	err := python3.Py_SetPath(pythonPath)

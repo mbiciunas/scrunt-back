@@ -66,7 +66,10 @@ func WriteFile(embeddedFiles embed.FS, path string) {
 }
 
 func ExtractPython() {
-	pythonPath := filepath.Join(pathPython, "Python-3.7.12.tgz")
+	pythonPath := filepath.Join(pathPython, "python.tgz")
+	fmt.Println("Current Directory *******************")
+	fmt.Println("Python Path: ", pythonPath)
+	fmt.Println("Current Directory *******************")
 	r, err := os.Open(pythonPath)
 	if err != nil {
 		fmt.Println("error")
