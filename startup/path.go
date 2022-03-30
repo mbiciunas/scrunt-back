@@ -51,20 +51,20 @@ func MakeDirectory() {
 		log.Println(err)
 	}
 
-	err = os.MkdirAll(pathFront, 0700)
-	if err != nil {
-		log.Println(err)
-	}
+	//err = os.MkdirAll(pathFront, 0700)
+	//if err != nil {
+	//	log.Println(err)
+	//}
 
-	err = os.MkdirAll(pathPython, 0700)
-	if err != nil {
-		log.Println(err)
-	}
+	//err = os.MkdirAll(pathPython, 0700)
+	//if err != nil {
+	//	log.Println(err)
+	//}
 
-	err = os.MkdirAll(pathDatabase, 0600)
-	if err != nil {
-		log.Println(err)
-	}
+	//err = os.MkdirAll(pathDatabase, 0600)
+	//if err != nil {
+	//	log.Println(err)
+	//}
 
 	fmt.Println("*************************************")
 }

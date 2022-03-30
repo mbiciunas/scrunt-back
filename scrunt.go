@@ -16,7 +16,7 @@ var embededFiles embed.FS
 func main() {
 	startup.MakeDirectory()
 
-	startup.ListFilesAll(embededFiles)
+	startup.ListFilesAll(embededFiles, ".")
 
 	//startup.OpenFile(embededFiles)
 
