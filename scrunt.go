@@ -10,20 +10,11 @@ import (
 	"scrunt-back/startup"
 )
 
-//go:embed frontend python
+//go:embed frontend python database
 var embededFiles embed.FS
 
 func main() {
-	startup.MakeDirectory()
-
-	startup.ListFilesAll(embededFiles, ".")
-
-	//startup.OpenFile(embededFiles)
-
-	startup.CurrentDirectory()
-
-	startup.ExtractPython()
-	//startup.WriteFile(embededFiles)
+	startup.Startup(embededFiles)
 
 	python()
 

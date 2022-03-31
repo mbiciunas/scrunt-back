@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 )
 
-func ExtractTarGz(path string, gzipStream io.Reader) {
+func extractTarGz(path string, gzipStream io.Reader) {
 	uncompressedStream, err := gzip.NewReader(gzipStream)
 	if err != nil {
 		log.Fatal("ExtractTarGz: NewReader failed")
@@ -48,15 +48,6 @@ func ExtractTarGz(path string, gzipStream io.Reader) {
 			outFile.Close()
 
 		default:
-
-			//
-			// Lots to do to build the python tar file:
-			// 		Compile python
-			//		Resolve all link entries
-			//		Remove unneeded files (bin?, etc)
-			//
-			// Need to automate setup of python so can be properly built.
-			//
 			log.Println("ExtractTarGz: uknown type: %s in %s", header.Typeflag, header.Name)
 			//log.Fatalf("ExtractTarGz: uknown type: %s in %s",
 			//	header.Typeflag,

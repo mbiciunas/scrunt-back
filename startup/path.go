@@ -44,7 +44,7 @@ func CurrentDirectory() {
 	fmt.Println("*************************************")
 }
 
-func MakeDirectory() {
+func makeDirectory() {
 	fmt.Println("Make Directory **********************")
 	err := os.MkdirAll(SCRUNT, 0700)
 	if err != nil {

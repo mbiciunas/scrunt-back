@@ -1,70 +1,14 @@
 package startup
 
-import (
-	"embed"
-	"fmt"
-	"io/fs"
-	"io/ioutil"
-	"log"
-	"os"
-	"path/filepath"
-)
+import "embed"
 
-func ListFilesAll(embeddedFiles embed.FS, path string) {
-	fmt.Println("List All Files **********************")
+func Startup(embeddedFiles embed.FS) {
 
-	err := fs.WalkDir(embeddedFiles, path, func(path string, d fs.DirEntry, err error) error {
-		if err != nil {
-			return err
-		}
+	makeDirectory()
 
-		fmt.Printf("path=%q, isDir=%v\n", path, d.IsDir())
+	frontend(embeddedFiles)
 
-		if d.IsDir() {
-			err = os.MkdirAll(filepath.Join(pathScrunt, path), 0700)
-			if err != nil {
-				log.Println(err)
-			}
-		} else {
-			WriteFile(embeddedFiles, path)
-		}
+	python(embeddedFiles)
 
-		return nil
-	})
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println("*************************************")
-}
-
-func WriteFile(embeddedFiles embed.FS, path string) {
-	//fmt.Println("Write File **************************")
-
-	file, err := embeddedFiles.ReadFile(path)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	//fmt.Println("Path: " + path + "  Directory: " + GetPathScrunt(path))
-	err = ioutil.WriteFile(GetPathScrunt(path), file, 0644)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	//fmt.Println("*************************************")
-}
-
-func ExtractPython() {
-	pythonPath := filepath.Join(pathPython, "python.tgz")
-	fmt.Println("Current Directory *******************")
-	fmt.Println("Python Path: ", pythonPath)
-	fmt.Println("Current Directory *******************")
-	r, err := os.Open(pythonPath)
-	if err != nil {
-		fmt.Println("error")
-	}
-	ExtractTarGz(pathPython, r)
+	database(embeddedFiles)
 }
