@@ -5,5 +5,5 @@ import (
 )
 
 func frontend(embeddedFiles embed.FS) {
-	WriteFilesystem(embeddedFiles, "frontend")
+	WriteFilesystem(embeddedFiles, "embed/frontend", "frontend")
 }

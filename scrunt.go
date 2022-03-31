@@ -10,11 +10,11 @@ import (
 	"scrunt-back/startup"
 )
 
-//go:embed frontend python database
-var embededFiles embed.FS
+//go:embed embed
+var embeddedFiles embed.FS
 
 func main() {
-	startup.Startup(embededFiles)
+	startup.Startup(embeddedFiles)
 
 	python()
 

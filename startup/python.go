@@ -8,7 +8,7 @@ import (
 )
 
 func python(embeddedFiles embed.FS) {
-	WriteFilesystem(embeddedFiles, "python")
+	WriteFilesystem(embeddedFiles, "embed/python", "python")
 
 	extractPython()
 }

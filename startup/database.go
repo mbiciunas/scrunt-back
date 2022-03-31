@@ -5,5 +5,5 @@ import (
 )
 
 func database(embeddedFiles embed.FS) {
-	WriteFilesystem(embeddedFiles, "database")
+	WriteFilesystem(embeddedFiles, "embed/database", "database")
 }

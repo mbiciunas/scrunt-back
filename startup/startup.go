@@ -1,6 +1,8 @@
 package startup
 
-import "embed"
+import (
+	"embed"
+)
 
 func Startup(embeddedFiles embed.FS) {
 
