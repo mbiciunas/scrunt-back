@@ -1,9 +1,9 @@
 package startup
 
 import (
-	"embed"
+	"io/fs"
 )
 
-func database(embeddedFiles embed.FS) {
-	WriteFilesystem(embeddedFiles, "embed/database", "database")
+func database(fileSystem fs.FS) {
+	WriteFilesystem(fileSystem, "database")
 }

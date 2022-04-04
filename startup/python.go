@@ -1,14 +1,14 @@
 package startup
 
 import (
-	"embed"
 	"fmt"
+	"io/fs"
 	"os"
 	"path/filepath"
 )
 
-func python(embeddedFiles embed.FS) {
-	WriteFilesystem(embeddedFiles, "embed/python", "python")
+func python(fileSystem fs.FS) {
+	WriteFilesystem(fileSystem, "python")
 
 	extractPython()
 }

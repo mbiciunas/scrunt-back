@@ -1,25 +1,19 @@
 package startup
 
 import (
-	"embed"
+	"bufio"
 	"fmt"
+	"io"
 	"io/fs"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
 )
 
-//
-// Need to get rid of leading embed portion of directory.  What we're doing
-// now doesn't work with deeper structures.
-// May make sense to go back to using SubFS and passing that.  Then fixing the file write stuff.
-//
+func WriteFilesystem(fileSystem fs.FS, pathRead string) {
+	fmt.Println("Write Files *************************")
 
-func WriteFilesystem(embeddedFiles embed.FS, pathRead string, pathWrite string) {
-	fmt.Println("List All Files **********************")
-
-	err := fs.WalkDir(embeddedFiles, pathRead, func(pathEmbed string, d fs.DirEntry, err error) error {
+	err := fs.WalkDir(fileSystem, pathRead, func(pathEmbed string, d fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
@@ -27,13 +21,12 @@ func WriteFilesystem(embeddedFiles embed.FS, pathRead string, pathWrite string) 
 		fmt.Printf("pathEmbed=%q, isDir=%v\n", pathEmbed, d.IsDir())
 
 		if d.IsDir() {
-			fmt.Println("Create directory:", filepath.Join(pathScrunt, pathWrite))
-			err = os.MkdirAll(filepath.Join(pathScrunt, pathWrite), 0700)
+			err = os.MkdirAll(filepath.Join(pathScrunt, pathEmbed), 0700)
 			if err != nil {
 				log.Println(err)
 			}
 		} else {
-			writeFile(embeddedFiles, pathEmbed, pathWrite)
+			writeFile(fileSystem, pathEmbed)
 		}
 
 		return nil
@@ -46,20 +39,55 @@ func WriteFilesystem(embeddedFiles embed.FS, pathRead string, pathWrite string) 
 	fmt.Println("*************************************")
 }
 
-func writeFile(embeddedFiles embed.FS, pathEmbed string, pathWrite string) {
-	file, err := embeddedFiles.ReadFile(pathEmbed)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	//pathWrite := strings.Replace(pathRead, "embed/", "", 1)
-
-	fmt.Println("Write file:", filepath.Join(pathScrunt, pathWrite))
-	err = ioutil.WriteFile(GetPathScrunt(pathWrite), file, 0644)
-
+func writeFile(fileSystem fs.FS, pathEmbed string) {
+	// Open file for reading
+	fileRead, err := fileSystem.Open(pathEmbed)
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer func() {
+		if err = fileRead.Close(); err != nil {
+			log.Fatal(err)
+		}
+	}()
 
-	//fmt.Println("*************************************")
+	// Create file for writing
+	fileWrite, err := os.Create(filepath.Join(pathScrunt, pathEmbed))
+	if err != nil {
+		fmt.Println("Did not work writing to:", filepath.Join(pathScrunt, pathEmbed))
+		log.Fatal(err)
+	}
+	defer func() {
+		if err = fileWrite.Close(); err != nil {
+			log.Fatal(err)
+		}
+	}()
+
+	// Set up the buffers
+	bufferRead := bufio.NewReader(fileRead)
+	bufferWriter := bufio.NewWriter(fileWrite)
+	buffer := make([]byte, 4096)
+
+	for {
+		// Read a chunk of the source file
+		n, err := bufferRead.Read(buffer)
+		if err != nil && err != io.EOF {
+			log.Fatal("Error reading file:", err)
+		}
+		if n == 0 {
+			break
+		}
+
+		// Write a chunk to the destination file
+		_, err = bufferWriter.Write(buffer[:n])
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	// Flush the writes to disk
+	err = bufferWriter.Flush()
+	if err != nil {
+		log.Fatal(err)
+	}
 }

@@ -7,6 +7,7 @@ import (
 	"github.com/pkg/browser"
 	"log"
 	"net/http"
+	"scrunt-back/models"
 	"scrunt-back/startup"
 )
 
@@ -14,11 +15,19 @@ import (
 var embeddedFiles embed.FS
 
 func main() {
+	// Run startup to extract files from embed and write to .scrunt
 	startup.Startup(embeddedFiles)
 
+	// Test python working
 	python()
 
+	// Open browser page
 	//openBrowser()
+
+	err := models.InitDB()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	fileServer := http.FileServer(http.Dir("./.scrunt/frontend")) // New code
 	http.Handle("/", fileServer)                                  // New code

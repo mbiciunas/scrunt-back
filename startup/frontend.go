@@ -1,9 +1,9 @@
 package startup
 
 import (
-	"embed"
+	"io/fs"
 )
 
-func frontend(embeddedFiles embed.FS) {
-	WriteFilesystem(embeddedFiles, "embed/frontend", "frontend")
+func frontend(fileSystem fs.FS) {
+	WriteFilesystem(fileSystem, "frontend")
 }

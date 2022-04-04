@@ -2,15 +2,22 @@ package startup
 
 import (
 	"embed"
+	"io/fs"
+	"log"
 )
 
 func Startup(embeddedFiles embed.FS) {
 
+	fileSystem, err := fs.Sub(fs.FS(embeddedFiles), "embed")
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	makeDirectory()
 
-	frontend(embeddedFiles)
+	frontend(fileSystem)
 
-	python(embeddedFiles)
+	python(fileSystem)
 
-	database(embeddedFiles)
+	database(fileSystem)
 }
