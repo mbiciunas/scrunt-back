@@ -3,8 +3,8 @@ package script
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"goginreact/models"
 	"net/http"
+	"scrunt-back/models"
 )
 
 type data struct {

@@ -6,7 +6,6 @@ import (
 	"github.com/DataDog/go-python3"
 	"github.com/pkg/browser"
 	"log"
-	"net/http"
 	"scrunt-back/models"
 	"scrunt-back/startup"
 )
@@ -16,7 +15,7 @@ var embeddedFiles embed.FS
 
 func main() {
 	// Run startup to extract files from embed and write to .scrunt
-	startup.Startup(embeddedFiles)
+	router := startup.Startup(embeddedFiles)
 
 	// Test python working
 	python()
@@ -29,13 +28,19 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fileServer := http.FileServer(http.Dir("./.scrunt/frontend")) // New code
-	http.Handle("/", fileServer)                                  // New code
-
-	fmt.Printf("Starting server at port 8080\n")
-	if err := http.ListenAndServe(":8080", nil); err != nil {
-		log.Fatal(err)
+	// Start and run the server
+	err = router.Run(":3000")
+	if err != nil {
+		return
 	}
+
+	//fileServer := http.FileServer(http.Dir("./.scrunt/frontend")) // New code
+	//http.Handle("/", fileServer)                                  // New code
+	//
+	//fmt.Printf("Starting server at port 8080\n")
+	//if err := http.ListenAndServe(":8080", nil); err != nil {
+	//	log.Fatal(err)
+	//}
 }
 
 func openBrowser() {

@@ -45,11 +45,14 @@ func extractTarGz(path string, gzipStream io.Reader) {
 			if _, err := io.Copy(outFile, tarReader); err != nil {
 				log.Fatalf("ExtractTarGz: Copy() failed: %s", err.Error())
 			}
-			outFile.Close()
+			err = outFile.Close()
+			if err != nil {
+				log.Fatalf("ExtractTarGz: Close() failed: %s", err.Error())
+			}
 
 		default:
-			log.Println("ExtractTarGz: uknown type: %s in %s", header.Typeflag, header.Name)
-			//log.Fatalf("ExtractTarGz: uknown type: %s in %s",
+			log.Printf("ExtractTarGz: unknown type: %c in %s\n", header.Typeflag, header.Name)
+			//log.Fatalf("ExtractTarGz: unknown type: %s in %s",
 			//	header.Typeflag,
 			//	header.Name)
 		}

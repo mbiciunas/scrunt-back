@@ -2,8 +2,8 @@ package server
 
 import (
 	"github.com/gin-gonic/gin"
-	"goginreact/models"
 	"net/http"
+	"scrunt-back/models"
 	"strconv"
 )
 

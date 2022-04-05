@@ -3,11 +3,11 @@ package server
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"goginreact/models"
 	"net/http"
+	"scrunt-back/models"
 )
 
-// Retrieve a list of all servers
+// GetAllServer Retrieve a list of all servers
 func GetAllServer(c *gin.Context) {
 	servers, err := models.SelectServersAll()
 	fmt.Println("Server.GetAllServer - servers", servers)

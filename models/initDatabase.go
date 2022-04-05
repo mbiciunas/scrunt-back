@@ -2,7 +2,6 @@ package models
 
 import (
 	"database/sql"
-	"fmt"
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -15,8 +14,6 @@ func InitDB() error {
 	}
 
 	db = database
-
-	fmt.Println(db.Ping())
 
 	return db.Ping()
 }

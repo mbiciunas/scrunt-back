@@ -2,12 +2,12 @@ package server
 
 import (
 	"github.com/gin-gonic/gin"
-	"goginreact/models"
 	"net/http"
+	"scrunt-back/models"
 	"strconv"
 )
 
-// Retrieve a single server
+// GetServer Retrieve a single server
 func GetServer(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil || id < 1 {

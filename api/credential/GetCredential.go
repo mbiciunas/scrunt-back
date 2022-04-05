@@ -4,12 +4,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"goginreact/models"
 	"net/http"
+	"scrunt-back/models"
 	"strconv"
 )
 
-// Retrieve a single credential
+// GetCredential Retrieve a single credential
 func GetCredential(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil || id < 1 {

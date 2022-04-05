@@ -3,8 +3,8 @@ package credential
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"goginreact/models"
 	"net/http"
+	"scrunt-back/models"
 	"strconv"
 )
 
@@ -13,7 +13,7 @@ type Data struct {
 	Credential string `form:"credential" json:"credential" binding:"required"`
 }
 
-// Update a single credential
+// PutCredential Update a single credential
 func PutCredential(c *gin.Context) {
 	var json Data
 
