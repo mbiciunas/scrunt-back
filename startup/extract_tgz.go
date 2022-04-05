@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 )
 
-func ExtractTarGz(path string, gzipStream io.Reader) {
+func extractTarGz(path string, gzipStream io.Reader) {
 	uncompressedStream, err := gzip.NewReader(gzipStream)
 	if err != nil {
 		log.Fatal("ExtractTarGz: NewReader failed")
@@ -33,7 +33,7 @@ func ExtractTarGz(path string, gzipStream io.Reader) {
 			//pythonPath := filepath.Join(path, header.Name)
 
 			//if err := os.Mkdir(header.Name, 0755); err != nil {
-			if err := os.Mkdir(filepath.Join(path, header.Name), 0755); err != nil {
+			if err := os.MkdirAll(filepath.Join(path, header.Name), 0755); err != nil {
 				log.Fatalf("ExtractTarGz: Mkdir() failed: %s", err.Error())
 			}
 		case tar.TypeReg:
@@ -45,20 +45,14 @@ func ExtractTarGz(path string, gzipStream io.Reader) {
 			if _, err := io.Copy(outFile, tarReader); err != nil {
 				log.Fatalf("ExtractTarGz: Copy() failed: %s", err.Error())
 			}
-			outFile.Close()
+			err = outFile.Close()
+			if err != nil {
+				log.Fatalf("ExtractTarGz: Close() failed: %s", err.Error())
+			}
 
 		default:
-
-			//
-			// Lots to do to build the python tar file:
-			// 		Compile python
-			//		Resolve all link entries
-			//		Remove unneeded files (bin?, etc)
-			//
-			// Need to automate setup of python so can be properly built.
-			//
-			log.Println("ExtractTarGz: uknown type: %s in %s", header.Typeflag, header.Name)
-			//log.Fatalf("ExtractTarGz: uknown type: %s in %s",
+			log.Printf("ExtractTarGz: unknown type: %c in %s\n", header.Typeflag, header.Name)
+			//log.Fatalf("ExtractTarGz: unknown type: %s in %s",
 			//	header.Typeflag,
 			//	header.Name)
 		}
