@@ -2,11 +2,10 @@ package main
 
 import (
 	"embed"
-	"fmt"
-	"github.com/DataDog/go-python3"
 	"github.com/pkg/browser"
 	"log"
 	"scrunt-back/models"
+	"scrunt-back/python"
 	"scrunt-back/startup"
 )
 
@@ -15,10 +14,16 @@ var embeddedFiles embed.FS
 
 func main() {
 	// Run startup to extract files from embed and write to .scrunt
-	router := startup.Startup(embeddedFiles)
+	startup.Startup(embeddedFiles)
+
+	// Initialize the router
+	router := router()
+
+	// Set up the API endpoints
+	api(router)
 
 	// Test python working
-	python()
+	python.Python("print('hello world from simple')")
 
 	// Open browser page
 	//openBrowser()
@@ -50,25 +55,25 @@ func openBrowser() {
 	}
 }
 
-func python() {
-	pythonPath := startup.GetPathPython("./lib/python3.7")
-	//pythonPath := startup.GetPathPython("./Python-3.7.12/lib/python3.7")
-	fmt.Println(pythonPath)
-
-	err := python3.Py_SetPath(pythonPath)
-	//err := python3.Py_SetPath("./python-3.7.12/lib/python3.7")
-	if err != nil {
-		return
-	}
-
-	python3path, _ := python3.Py_GetPath()
-
-	fmt.Println("python3.Py_GetPath(): ", python3path)
-
-	python3.Py_Initialize()
-
-	python3.PyRun_SimpleString("print('hello world from simple')")
-	python3.PyRun_SimpleString("print('hello world from simple')")
-
-	python3.Py_Finalize()
-}
+//func python() {
+//	pythonPath := startup.GetPathPython("./lib/python3.7")
+//	//pythonPath := startup.GetPathPython("./Python-3.7.12/lib/python3.7")
+//	fmt.Println(pythonPath)
+//
+//	err := python3.Py_SetPath(pythonPath)
+//	//err := python3.Py_SetPath("./python-3.7.12/lib/python3.7")
+//	if err != nil {
+//		return
+//	}
+//
+//	python3path, _ := python3.Py_GetPath()
+//
+//	fmt.Println("python3.Py_GetPath(): ", python3path)
+//
+//	python3.Py_Initialize()
+//
+//	python3.PyRun_SimpleString("print('hello world from simple')")
+//	python3.PyRun_SimpleString("print('hello world from simple')")
+//
+//	python3.Py_Finalize()
+//}
