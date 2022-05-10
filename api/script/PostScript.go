@@ -8,8 +8,9 @@ import (
 )
 
 type data struct {
-	Name   string `form:"name" json:"name" binding:"required"`
-	Script string `form:"script" json:"script" binding:"required"`
+	Name        string `form:"name" json:"name" binding:"required"`
+	Description string `form:"description" json:"description" binding:"required"`
+	Code        string `form:"code" json:"code" binding:"required"`
 }
 
 func PostScript(c *gin.Context) {
@@ -17,9 +18,10 @@ func PostScript(c *gin.Context) {
 
 	if err := c.ShouldBindJSON(&json); err == nil {
 		fmt.Println("Name: ", json.Name)
-		fmt.Println("Script: ", json.Script)
+		fmt.Println("Description: ", json.Description)
+		fmt.Println("Script: ", json.Code)
 
-		id, err := models.InsertScript(json.Name, json.Script)
+		id, err := models.InsertScript(json.Name, json.Description, json.Code)
 		if err != nil || id <= 0 {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err})
 			return

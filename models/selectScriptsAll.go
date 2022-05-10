@@ -7,9 +7,10 @@ import (
 )
 
 type ScriptAll struct {
-	Id     int
-	Name   string
-	Script string
+	Id          int
+	Name        string
+	Description string
+	Code        string
 }
 
 var scriptAll []ScriptAll
@@ -21,9 +22,11 @@ func SelectScriptsAll() ([]ScriptAll, error) {
 	statement, err := db.Prepare(
 		`SELECT s.id,
 			s.name,
-			s.script
+			s.description,
+			s.code
 		FROM scripts s`)
 	if err != nil {
+		fmt.Println("models.selectScriptsAll", "Error", err)
 		return nil, err
 	}
 
@@ -58,11 +61,13 @@ func SelectScriptsAll() ([]ScriptAll, error) {
 func insertScript(rows *sql.Rows) error {
 	var id int
 	var name string
-	var script string
+	var description string
+	var code string
 
 	fmt.Println("models.selectScriptsAll", "Insert Script")
-	err := rows.Scan(&id, &name, &script)
+	err := rows.Scan(&id, &name, &description, &code)
 	if err != nil {
+		fmt.Println("models.selectScriptsAll", "Error", err)
 		return err
 	}
 
@@ -70,7 +75,8 @@ func insertScript(rows *sql.Rows) error {
 
 	scriptRow.Id = id
 	scriptRow.Name = name
-	scriptRow.Script = script
+	scriptRow.Description = description
+	scriptRow.Code = code
 
 	fmt.Println(scriptRow)
 

@@ -1,9 +1,11 @@
 package script
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"scrunt-back/models"
 	"strconv"
 )
 
@@ -13,7 +15,9 @@ import (
 //}
 
 func PostScriptRun(c *gin.Context) {
-	var json data
+	//var json data
+
+	fmt.Println("PostScriptRun", "Run Id: ", c.Param("id"))
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil || id < 1 {
@@ -21,21 +25,29 @@ func PostScriptRun(c *gin.Context) {
 		return
 	}
 
-	if err := c.ShouldBindJSON(&json); err == nil {
-		fmt.Println("Run Id: ", id)
-		fmt.Println("Run Name: ", json.Name)
-		fmt.Println("Run Script: ", json.Script)
+	fmt.Println("PostScriptRun", "Run Id: ", id)
 
-		//id, err := models.InsertScript(json.Name, json.Script)
-		//if err != nil || id <= 0 {
-		//	c.JSON(http.StatusBadRequest, gin.H{"error": err})
-		//	return
-		//}
+	script, err := models.SelectScript(id)
+	jsonScript, err := json.Marshal(script)
 
-		c.Header("Content-Type", "application/json")
-		c.JSON(http.StatusOK, id)
+	fmt.Println("PostScriptRun", "script: ", script)
+	fmt.Println("PostScriptRun", "jsonScript: ", string(jsonScript))
 
-	} else {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	}
+	//if err := c.ShouldBindJSON(&json); err == nil {
+	//	fmt.Println("Run Id: ", id)
+	//	fmt.Println("Run Name: ", json.Name)
+	//	fmt.Println("Run Code: ", json.Code)
+	//
+	//	//id, err := models.InsertScript(json.Name, json.Script)
+	//	//if err != nil || id <= 0 {
+	//	//	c.JSON(http.StatusBadRequest, gin.H{"error": err})
+	//	//	return
+	//	//}
+	//
+	//	c.Header("Content-Type", "application/json")
+	//	c.JSON(http.StatusOK, id)
+	//
+	//} else {
+	//	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	//}
 }
