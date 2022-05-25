@@ -54,26 +54,3 @@ func openBrowser() {
 		return
 	}
 }
-
-//func python() {
-//	pythonPath := startup.GetPathPython("./lib/python3.7")
-//	//pythonPath := startup.GetPathPython("./Python-3.7.12/lib/python3.7")
-//	fmt.Println(pythonPath)
-//
-//	err := python3.Py_SetPath(pythonPath)
-//	//err := python3.Py_SetPath("./python-3.7.12/lib/python3.7")
-//	if err != nil {
-//		return
-//	}
-//
-//	python3path, _ := python3.Py_GetPath()
-//
-//	fmt.Println("python3.Py_GetPath(): ", python3path)
-//
-//	python3.Py_Initialize()
-//
-//	python3.PyRun_SimpleString("print('hello world from simple')")
-//	python3.PyRun_SimpleString("print('hello world from simple')")
-//
-//	python3.Py_Finalize()
-//}

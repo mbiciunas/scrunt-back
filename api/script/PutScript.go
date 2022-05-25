@@ -9,8 +9,9 @@ import (
 )
 
 type Data struct {
-	Name   string `form:"name" json:"name" binding:"required"`
-	Script string `form:"script" json:"script" binding:"required"`
+	Name        string `form:"name" json:"name" binding:"required"`
+	Description string `form:"description" json:"description" binding:"required"`
+	Code        string `form:"code" json:"code" binding:"required"`
 }
 
 func PutScript(c *gin.Context) {
@@ -26,9 +27,10 @@ func PutScript(c *gin.Context) {
 
 	if err := c.ShouldBindJSON(&json); err == nil {
 		fmt.Println("Name: ", json.Name)
-		fmt.Println("Script: ", json.Script)
+		fmt.Println("Description: ", json.Description)
+		fmt.Println("Code: ", json.Code)
 
-		rows, err := models.UpdateScript(id, json.Name, json.Script)
+		rows, err := models.UpdateScript(id, json.Name, json.Description, json.Code)
 		if err != nil || rows != 1 {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err})
 			return
