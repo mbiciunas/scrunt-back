@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"scrunt-back/api/credential"
+	"scrunt-back/api/output"
 	"scrunt-back/api/script"
 	"scrunt-back/api/server"
 	"scrunt-back/api/serverCredential"
@@ -40,4 +41,6 @@ func api(router *gin.Engine) {
 	api.PUT("/scripts/:id", script.PutScript)
 	api.POST("/scripts/:id/run", script.PostScriptRun)
 	api.DELETE("/scripts/:id", script.DeleteScript)
+
+	api.POST("/outputs", output.PostOutput)
 }
