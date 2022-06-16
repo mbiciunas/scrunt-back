@@ -1,7 +1,6 @@
 package output
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"scrunt-back/models"
@@ -17,9 +16,9 @@ func PostOutput(c *gin.Context) {
 	var json data
 
 	if err := c.ShouldBindJSON(&json); err == nil {
-		fmt.Println("ScriptId: ", json.ScriptId)
-		fmt.Println("Output: ", json.Output)
-		fmt.Println("Log: ", json.Log)
+		//fmt.Println("ScriptId: ", json.ScriptId)
+		//fmt.Println("Output: ", json.Output)
+		//fmt.Println("Log: ", json.Log)
 
 		id, err := models.InsertOutput(json.ScriptId, json.Output, json.Log)
 		if err != nil || id <= 0 {

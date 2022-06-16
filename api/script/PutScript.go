@@ -9,15 +9,24 @@ import (
 )
 
 type Data struct {
-	Name        string `form:"name" json:"name" binding:"required"`
-	Description string `form:"description" json:"description" binding:"required"`
-	Code        string `form:"code" json:"code" binding:"required"`
+	Name        string `json:"Name" binding:"required"`
+	Description string `json:"Description"`
+	Code        string `json:"Code" binding:"required"`
 }
 
 func PutScript(c *gin.Context) {
 	var json Data
 
-	//id := c.Params.ByName("id")
+	//jsonData, err := ioutil.ReadAll(c.Request.Body)
+	//if err != nil {
+	//	// Handle error
+	//}
+	//fmt.Println("jsonData: ", string(jsonData))
+	//
+	////id := c.Params.ByName("id")
+	//fmt.Println("ByName(\"Name\"): ", c.Params.ByName("Name"))
+	//fmt.Println("ByName(\"Description\"): ", c.Params.ByName("Description"))
+	//fmt.Println("ByName(\"Code\"): ", c.Params.ByName("Code"))
 	id, err := strconv.Atoi(c.Params.ByName("id"))
 	if err != nil || id < 1 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err})
@@ -37,6 +46,7 @@ func PutScript(c *gin.Context) {
 		}
 
 	} else {
+		fmt.Println("err.Error(): ", err.Error())
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
 }

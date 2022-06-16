@@ -17,15 +17,11 @@ import (
 func PostScriptRun(c *gin.Context) {
 	//var json data
 
-	fmt.Println("PostScriptRun", "Run Id: ", c.Param("id"))
-
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil || id < 1 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err})
 		return
 	}
-
-	fmt.Println("PostScriptRun", "Run Id: ", id)
 
 	script, err := models.SelectScript(id)
 	//jsonScript, err := json.Marshal(script)

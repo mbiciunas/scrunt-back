@@ -42,5 +42,7 @@ func api(router *gin.Engine) {
 	api.POST("/scripts/:id/run", script.PostScriptRun)
 	api.DELETE("/scripts/:id", script.DeleteScript)
 
+	//api.GET("/outputs/:id", script.GetOutput)
 	api.POST("/outputs", output.PostOutput)
+	//api.GET("/outputs/script/:id", script.GetOutputByScript)
 }
