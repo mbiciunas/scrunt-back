@@ -11,11 +11,17 @@ const SCRUNT = ".scrunt"
 const FRONT = "frontend"
 const PYTHON = "python"
 const DATABASE = "database"
+const LIBSCRUNT = "libscrunt"
 
 var pathScrunt = filepath.Join(SCRUNT)
 var pathFront = filepath.Join(SCRUNT, FRONT)
 var pathPython = filepath.Join(SCRUNT, PYTHON)
 var pathDatabase = filepath.Join(SCRUNT, DATABASE)
+var pathLibScrunt = filepath.Join(SCRUNT, LIBSCRUNT)
+
+func GetDirectoryLibScrunt() string {
+	return pathLibScrunt
+}
 
 func GetPathScrunt(filename string) string {
 	return filepath.Join(SCRUNT, filename)

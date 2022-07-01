@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"scrunt-back/models"
+	"scrunt-back/models/runtime"
 	"scrunt-back/python"
 	"strconv"
 )
@@ -23,13 +24,16 @@ func PostScriptRun(c *gin.Context) {
 		return
 	}
 
+	run_id, err := runtime.InsertRuns(id, 1)
+	//jsonScript, err := json.Marshal(script)
+
 	script, err := models.SelectScript(id)
 	//jsonScript, err := json.Marshal(script)
 
 	fmt.Println("PostScriptRun", "code: ", script.Code)
 	//fmt.Println("PostScriptRun", "jsonScript: ", string(jsonScript))
 
-	python.Python(script.Code)
+	python.Python(int(run_id), script.Code)
 
 	//if err := c.ShouldBindJSON(&json); err == nil {
 	//	fmt.Println("Run Id: ", id)

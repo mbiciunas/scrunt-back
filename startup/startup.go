@@ -21,5 +21,7 @@ func Startup(embeddedFiles embed.FS) {
 
 	database(fileSystem)
 
+	libScrunt(fileSystem)
+
 	//return router
 }

@@ -5,6 +5,7 @@ import (
 	"github.com/pkg/browser"
 	"log"
 	"scrunt-back/models"
+	"scrunt-back/models/runtime"
 	"scrunt-back/python"
 	"scrunt-back/startup"
 )
@@ -23,12 +24,19 @@ func main() {
 	api(router)
 
 	// Test python working
-	python.Python("print('hello world from simple')")
+	python.Python(1, "print('hello world from simple')")
 
 	// Open browser page
 	//openBrowser()
 
+	// Connect to the scrunt database
 	err := models.InitDB()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Connect to the runtime database
+	err = runtime.InitDB()
 	if err != nil {
 		log.Fatal(err)
 	}
