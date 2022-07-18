@@ -23,9 +23,6 @@ func main() {
 	// Set up the API endpoints
 	api(router)
 
-	// Test python working
-	python.Python(1, "print('hello world from simple')")
-
 	// Open browser page
 	//openBrowser()
 
@@ -41,11 +38,19 @@ func main() {
 		log.Fatal(err)
 	}
 
+	// Initialize the python instance.
+	// Note we're not deferring finalize here since we need the instance
+	// for as long as scrunt is running.
+	python.Initialize()
+
 	// Start and run the server
 	err = router.Run(":8080")
 	if err != nil {
 		return
 	}
+
+	// Finalize python since we're exiting the program now.
+	python.Finalize()
 
 	//fileServer := http.FileServer(http.Dir("./.scrunt/frontend")) // New code
 	//http.Handle("/", fileServer)                                  // New code
