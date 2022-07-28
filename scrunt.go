@@ -15,7 +15,9 @@ var embeddedFiles embed.FS
 
 func main() {
 	// Run startup to extract files from embed and write to .scrunt
-	startup.Startup(embeddedFiles)
+	if startup.InstallRequired() {
+		startup.Startup(embeddedFiles)
+	}
 
 	// Initialize the router
 	router := router()

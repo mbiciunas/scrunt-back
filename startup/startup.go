@@ -4,6 +4,7 @@ import (
 	"embed"
 	"io/fs"
 	"log"
+	"os"
 )
 
 func Startup(embeddedFiles embed.FS) {
@@ -24,4 +25,23 @@ func Startup(embeddedFiles embed.FS) {
 	libScrunt(fileSystem)
 
 	//return router
+}
+
+func InstallRequired() bool {
+	var install bool
+
+	if !directoryExist() {
+		install = true
+	}
+
+	return install
+}
+
+func directoryExist() bool {
+	_, err := os.Stat(GetDirectoryScrunt())
+	if os.IsNotExist(err) {
+		return false
+	}
+
+	return true
 }

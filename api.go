@@ -44,5 +44,5 @@ func api(router *gin.Engine) {
 
 	//api.GET("/outputs/:id", script.GetOutput)
 	api.POST("/outputs", output.PostOutput)
-	//api.GET("/outputs/script/:id", script.GetOutputByScript)
+	api.GET("/outputs/script/:runid/:id", output.GetOutputByRunId)
 }

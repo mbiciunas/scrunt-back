@@ -6,7 +6,7 @@ import (
 )
 
 func InsertOutput(runId int, outputType int, value string) (int64, error) {
-	statement, err := db.Prepare(`INSERT INTO outputs (run_id, type, value) VALUES (?, ?, ?)`)
+	statement, err := db.Prepare(`INSERT INTO outputs (run_id, type, OutputValue) VALUES (?, ?, ?)`)
 	if err != nil {
 		return 0, err
 	}

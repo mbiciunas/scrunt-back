@@ -9,14 +9,23 @@ import (
 	"strconv"
 )
 
-func GetScript(c *gin.Context) {
-	id, err := strconv.Atoi(c.Param("id"))
-	if err != nil || id < 1 {
+func GetOutputByRunId(c *gin.Context) {
+	fmt.Println("Enter GetOutputByRunId")
+	runId, err := strconv.Atoi(c.Param("runid"))
+	fmt.Println("runId", runId)
+	if err != nil || runId < 1 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err})
 		return
 	}
 
-	output, err := runtime.SelectOutputByScriptId(id)
+	id, err := strconv.Atoi(c.Param("id"))
+	fmt.Println("id", id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err})
+		return
+	}
+
+	output, err := runtime.SelectOutputByRunId(runId, id)
 	jsonOutput, err := json.Marshal(output)
 	fmt.Println(string(jsonOutput))
 

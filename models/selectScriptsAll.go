@@ -53,7 +53,7 @@ func SelectScriptsAll() ([]ScriptAll, error) {
 		return scriptAll, err
 	}
 
-	fmt.Println("Final", credentialAll)
+	fmt.Println("Final", scriptAll)
 
 	return scriptAll, nil
 }
@@ -82,7 +82,7 @@ func insertScript(rows *sql.Rows) error {
 
 	scriptAll = append(scriptAll, scriptRow)
 
-	fmt.Println(credentialAll)
+	fmt.Println(scriptAll)
 
 	return nil
 }
