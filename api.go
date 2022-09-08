@@ -8,6 +8,8 @@ import (
 	"scrunt-back/api/script"
 	"scrunt-back/api/server"
 	"scrunt-back/api/serverCredential"
+	"scrunt-back/api/service"
+	"scrunt-back/api/servicetype"
 )
 
 func api(router *gin.Engine) {
@@ -26,6 +28,10 @@ func api(router *gin.Engine) {
 	api.GET("/credentials/:id", credential.GetCredential)
 	api.PUT("/credentials/:id", credential.PutCredential)
 	api.DELETE("/credentials/:id", credential.DeleteCredential)
+
+	api.GET("/services", service.GetAllService)
+
+	api.GET("/servicetypes", servicetype.GetAllServiceType)
 
 	api.GET("/servers", server.GetAllServer)
 	api.POST("/servers", server.PostServer)
