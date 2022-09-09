@@ -3,8 +3,8 @@ package script
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"scrunt-back/models"
 	"scrunt-back/models/runtime"
+	"scrunt-back/models/scrunt/script"
 	"scrunt-back/python"
 	"strconv"
 )
@@ -26,7 +26,7 @@ func PostScriptRun(c *gin.Context) {
 	run_id, err := runtime.InsertRuns(id, 1)
 	//jsonScript, err := json.Marshal(script)
 
-	script, err := models.SelectScript(id)
+	script, err := script.SelectScript(id)
 	//jsonScript, err := json.Marshal(script)
 
 	//fmt.Println("PostScriptRun", "code: ", script.Code)

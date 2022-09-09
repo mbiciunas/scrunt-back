@@ -3,7 +3,7 @@ package script
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt/script"
 	"strconv"
 )
 
@@ -14,7 +14,7 @@ func DeleteScript(c *gin.Context) {
 		return
 	}
 
-	rows, err := models.DeleteScript(id)
+	rows, err := script.DeleteScript(id)
 	if err == nil {
 		c.Header("Content-Type", "application/json")
 		c.JSON(http.StatusOK, rows)

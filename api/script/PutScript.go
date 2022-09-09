@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt/script"
 	"strconv"
 )
 
@@ -39,7 +39,7 @@ func PutScript(c *gin.Context) {
 		fmt.Println("Description: ", json.Description)
 		fmt.Println("Code: ", json.Code)
 
-		rows, err := models.UpdateScript(id, json.Name, json.Description, json.Code)
+		rows, err := script.UpdateScript(id, json.Name, json.Description, json.Code)
 		if err != nil || rows != 1 {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err})
 			return

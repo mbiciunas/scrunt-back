@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt/credential"
 	"strconv"
 )
 
@@ -17,7 +17,7 @@ func GetCredential(c *gin.Context) {
 		return
 	}
 
-	credential, err := models.SelectCredential(id)
+	credential, err := credential.SelectCredential(id)
 	jsonCredential, err := json.Marshal(credential)
 	fmt.Println(string(jsonCredential))
 

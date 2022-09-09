@@ -1,9 +1,10 @@
-package models
+package servicetype
 
 import (
 	"database/sql"
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
+	"scrunt-back/models"
 )
 
 type ServiceTypeAll struct {
@@ -19,7 +20,7 @@ func SelectServiceTypesAll() ([]ServiceTypeAll, error) {
 
 	fmt.Println("models.selectServiceTypesAll - SelectServiceTypesAll")
 
-	statement, err := db.Prepare(
+	statement, err := models.Db.Prepare(
 		`SELECT s.id,
             s.name,
             s.icon

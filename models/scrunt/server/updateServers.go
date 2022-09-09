@@ -1,11 +1,12 @@
-package models
+package server
 
 import (
 	_ "github.com/mattn/go-sqlite3"
+	"scrunt-back/models"
 )
 
 func UpdateServer(id int, name string, address string) (int64, error) {
-	statement, err := db.Prepare(`UPDATE servers SET name=?, address=? WHERE id = ?`)
+	statement, err := models.Db.Prepare(`UPDATE servers SET name=?, address=? WHERE id = ?`)
 	if err != nil {
 		return 0, err
 	}

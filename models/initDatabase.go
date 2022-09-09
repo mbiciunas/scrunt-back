@@ -5,7 +5,7 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-var db *sql.DB
+var Db *sql.DB
 
 func InitDB() error {
 	database, err := sql.Open("sqlite3", ".scrunt/database/scrunt.db")
@@ -13,7 +13,7 @@ func InitDB() error {
 		return err
 	}
 
-	db = database
+	Db = database
 
-	return db.Ping()
+	return Db.Ping()
 }

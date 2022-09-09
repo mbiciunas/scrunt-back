@@ -3,7 +3,7 @@ package server
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt/server"
 	"strconv"
 )
 
@@ -15,7 +15,7 @@ func GetServer(c *gin.Context) {
 		return
 	}
 
-	server, err := models.SelectServer(id)
+	server, err := server.SelectServer(id)
 	if err == nil && server.Id > 0 {
 		c.Header("Content-Type", "application/json")
 		c.JSON(http.StatusOK, server)

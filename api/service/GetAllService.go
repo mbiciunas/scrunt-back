@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt/service"
 )
 
 // GetAllService Retrieve a list of all services
 func GetAllService(c *gin.Context) {
-	services, err := models.SelectServicesAll()
+	services, err := service.SelectServicesAll()
 	fmt.Println("Service.GetAllService - services", services)
 	if err == nil {
 		c.Header("Content-Type", "application/json")

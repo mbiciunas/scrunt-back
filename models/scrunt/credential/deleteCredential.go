@@ -1,14 +1,15 @@
-package models
+package credential
 
 import (
 	"database/sql"
 	"errors"
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
+	"scrunt-back/models"
 )
 
 func DeleteCredential(id int) (int64, error) {
-	tx, err := db.Begin()
+	tx, err := models.Db.Begin()
 	if err != nil {
 		return 0, err
 	}

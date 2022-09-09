@@ -1,8 +1,9 @@
-package models
+package script
 
 import (
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
+	"scrunt-back/models"
 )
 
 type Script struct {
@@ -13,7 +14,7 @@ type Script struct {
 }
 
 func SelectScript(id int) (Script, error) {
-	statement, err := db.Prepare(`SELECT id, name, description, code FROM scripts WHERE id = $1`)
+	statement, err := models.Db.Prepare(`SELECT id, name, description, code FROM scripts WHERE id = $1`)
 	if err != nil {
 		fmt.Println("SelectScript - prepare", err)
 		return Script{}, err

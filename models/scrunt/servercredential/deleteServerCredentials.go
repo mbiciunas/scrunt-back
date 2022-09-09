@@ -1,11 +1,12 @@
-package models
+package servercredential
 
 import (
 	_ "github.com/mattn/go-sqlite3"
+	"scrunt-back/models"
 )
 
 func DeleteServerCredential(id int) (int64, error) {
-	statement, err := db.Prepare(`DELETE FROM server_credentials WHERE id = ?`)
+	statement, err := models.Db.Prepare(`DELETE FROM server_credentials WHERE id = ?`)
 	if err != nil {
 		return 0, err
 	}

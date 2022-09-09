@@ -1,7 +1,8 @@
-package models
+package server
 
 import (
 	_ "github.com/mattn/go-sqlite3"
+	"scrunt-back/models"
 )
 
 type Server struct {
@@ -11,7 +12,7 @@ type Server struct {
 }
 
 func SelectServer(id int) (Server, error) {
-	statement, err := db.Prepare(`SELECT id, name, address FROM servers WHERE id = $1`)
+	statement, err := models.Db.Prepare(`SELECT id, name, address FROM servers WHERE id = $1`)
 	if err != nil {
 		return Server{}, err
 	}

@@ -1,17 +1,18 @@
-package models
+package script
 
 import (
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
+	"scrunt-back/models"
 )
 
-func InsertCredential(name string, credtype string, credential string) (int64, error) {
-	statement, err := db.Prepare(`INSERT INTO credentials (name, type, credential) VALUES (?, ?, ?)`)
+func InsertScript(name string, description string, code string) (int64, error) {
+	statement, err := models.Db.Prepare(`INSERT INTO scripts (name, description, code) VALUES (?, ?, ?)`)
 	if err != nil {
 		return 0, err
 	}
 
-	result, err := statement.Exec(name, credtype, credential)
+	result, err := statement.Exec(name, description, code)
 	if err != nil {
 		return 0, err
 	} else {

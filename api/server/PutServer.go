@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt/server"
 	"strconv"
 )
 
@@ -28,7 +28,7 @@ func PutServer(c *gin.Context) {
 		fmt.Println("Name: ", json.Name)
 		fmt.Println("Address: ", json.Address)
 
-		rows, err := models.UpdateServer(id, json.Name, json.Address)
+		rows, err := server.UpdateServer(id, json.Name, json.Address)
 		if err != nil || rows != 1 {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err})
 			return

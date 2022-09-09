@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt/script"
 )
 
 type data struct {
@@ -21,7 +21,7 @@ func PostScript(c *gin.Context) {
 		fmt.Println("Description: ", json.Description)
 		fmt.Println("Script: ", json.Code)
 
-		id, err := models.InsertScript(json.Name, json.Description, json.Code)
+		id, err := script.InsertScript(json.Name, json.Description, json.Code)
 		if err != nil || id <= 0 {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err})
 			return

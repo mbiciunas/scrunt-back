@@ -1,9 +1,10 @@
-package models
+package service
 
 import (
 	"database/sql"
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
+	"scrunt-back/models"
 )
 
 type project struct {
@@ -30,7 +31,7 @@ var oldServiceId int
 func SelectServicesAll() ([]ServiceAll, error) {
 	serviceAll = nil
 
-	statement, err := db.Prepare(
+	statement, err := models.Db.Prepare(
 		`SELECT s.id AS "serv_id",
             s.name,
             s.description,
