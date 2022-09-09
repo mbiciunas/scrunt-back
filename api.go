@@ -3,8 +3,10 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"scrunt-back/api/cloud"
 	"scrunt-back/api/credential"
 	"scrunt-back/api/output"
+	"scrunt-back/api/project"
 	"scrunt-back/api/script"
 	"scrunt-back/api/server"
 	"scrunt-back/api/serverCredential"
@@ -22,6 +24,10 @@ func api(router *gin.Engine) {
 			})
 		})
 	}
+
+	api.GET("/clouds", cloud.GetAllCloud)
+
+	api.GET("/projects", project.GetAllProject)
 
 	api.GET("/credentials", credential.GetAllCredential)
 	api.POST("/credentials", credential.PostCredential)
