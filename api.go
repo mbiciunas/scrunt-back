@@ -39,6 +39,9 @@ func api(router *gin.Engine) {
 
 	api.GET("/keys", key.GetAllKey)
 	api.POST("/keys", key.PostKey)
+	api.GET("/keys/:id", key.GetKey)
+	api.PUT("/keys/:id", key.PutKey)
+	api.DELETE("/keys/:id", key.DeleteKey)
 
 	api.GET("/keytypes", keytype.GetAllKeyType)
 

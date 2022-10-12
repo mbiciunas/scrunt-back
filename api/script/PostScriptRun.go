@@ -14,8 +14,13 @@ import (
 //	Script  string `form:"script" json:"script" binding:"required"`
 //}
 
+type RunId struct {
+	Id int64
+}
+
 func PostScriptRun(c *gin.Context) {
 	//var json data
+	var resultRunId RunId
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil || id < 1 {
@@ -27,6 +32,7 @@ func PostScriptRun(c *gin.Context) {
 	//jsonScript, err := json.Marshal(script)
 
 	script, err := script.SelectScript(id)
+	//fmt.Println("PostScriptRun", "code: ", script.Code)
 	//jsonScript, err := json.Marshal(script)
 
 	//fmt.Println("PostScriptRun", "code: ", script.Code)
@@ -51,4 +57,28 @@ func PostScriptRun(c *gin.Context) {
 	//} else {
 	//	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	//}
+
+	resultRunId.Id = run_id
+
+	if err == nil {
+		c.Header("Content-Type", "application/json")
+		c.JSON(http.StatusOK, resultRunId)
+	}
 }
+
+//func GetScript(c *gin.Context) {
+//	id, err := strconv.Atoi(c.Param("id"))
+//	if err != nil || id < 1 {
+//		c.JSON(http.StatusBadRequest, gin.H{"error": err})
+//		return
+//	}
+//
+//	script, err := script.SelectScript(id)
+//	jsonScript, err := json.Marshal(script)
+//	fmt.Println(string(jsonScript))
+//
+//	if err == nil {
+//		c.Header("Content-Type", "application/json")
+//		c.JSON(http.StatusOK, script)
+//	}
+//}

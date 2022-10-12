@@ -12,7 +12,7 @@ func Run(id int, code string) {
 	//scriptStart := "import sys\nsys.stdout = open('Output.txt', 'w')\n"
 	//scriptEnd := "sys.stdout.close()"
 	script := scriptStart + "\n" + code
-	//fmt.Println("Script: ", script)
+	fmt.Println("RunId: ", id, "Script: ", script)
 	//fmt.Println("Script: ", code)
 
 	err := python3.PySys_SetArgv([]string{strconv.Itoa(id)})
