@@ -26,10 +26,13 @@ func GetOutputByRunId(c *gin.Context) {
 	}
 
 	output, err := runtime.SelectOutputByRunId(runId, id)
+	//fmt.Println("Before json.Marshal")
 	jsonOutput, err := json.Marshal(output)
-	fmt.Println(string(jsonOutput))
-
-	if err == nil {
+	if err != nil {
+		fmt.Println("After json.Marshal", string(jsonOutput))
+		c.JSON(http.StatusBadRequest, gin.H{"error": err})
+		return
+	} else {
 		c.Header("Content-Type", "application/json")
 		c.JSON(http.StatusOK, output)
 	}

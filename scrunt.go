@@ -6,7 +6,6 @@ import (
 	"log"
 	"scrunt-back/models"
 	"scrunt-back/models/runtime"
-	"scrunt-back/python"
 	"scrunt-back/startup"
 )
 
@@ -43,7 +42,7 @@ func main() {
 	// Initialize the python instance.
 	// Note we're not deferring finalize here since we need the instance
 	// for as long as scrunt is running.
-	python.Initialize()
+	//python.Initialize()
 
 	// Start and run the server
 	err = router.Run(":8080")
@@ -52,7 +51,7 @@ func main() {
 	}
 
 	// Finalize python since we're exiting the program now.
-	python.Finalize()
+	//python.Finalize()
 
 	//fileServer := http.FileServer(http.Dir("./.scrunt/frontend")) // New code
 	//http.Handle("/", fileServer)                                  // New code
