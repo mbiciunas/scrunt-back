@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt/credential"
 	"strconv"
 )
 
@@ -29,7 +29,7 @@ func PutCredential(c *gin.Context) {
 		fmt.Println("Name: ", json.Name)
 		fmt.Println("credential: ", json.Credential)
 
-		rows, err := models.UpdateCredential(id, json.Name, json.Credential)
+		rows, err := credential.UpdateCredential(id, json.Name, json.Credential)
 		if err != nil || rows != 1 {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err})
 			return

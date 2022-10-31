@@ -2,12 +2,12 @@ package startup
 
 import (
 	"embed"
-	"github.com/gin-gonic/gin"
 	"io/fs"
 	"log"
+	"os"
 )
 
-func Startup(embeddedFiles embed.FS) *gin.Engine {
+func Startup(embeddedFiles embed.FS) {
 
 	fileSystem, err := fs.Sub(fs.FS(embeddedFiles), "embed")
 	if err != nil {
@@ -22,9 +22,26 @@ func Startup(embeddedFiles embed.FS) *gin.Engine {
 
 	database(fileSystem)
 
-	router := router()
+	libScrunt(fileSystem)
 
-	api(router)
+	//return router
+}
 
-	return router
+func InstallRequired() bool {
+	var install bool
+
+	if !directoryExist() {
+		install = true
+	}
+
+	return install
+}
+
+func directoryExist() bool {
+	_, err := os.Stat(GetDirectoryScrunt())
+	if os.IsNotExist(err) {
+		return false
+	}
+
+	return true
 }

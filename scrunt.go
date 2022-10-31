@@ -2,11 +2,10 @@ package main
 
 import (
 	"embed"
-	"fmt"
-	"github.com/DataDog/go-python3"
 	"github.com/pkg/browser"
 	"log"
 	"scrunt-back/models"
+	"scrunt-back/models/runtime"
 	"scrunt-back/startup"
 )
 
@@ -15,24 +14,44 @@ var embeddedFiles embed.FS
 
 func main() {
 	// Run startup to extract files from embed and write to .scrunt
-	router := startup.Startup(embeddedFiles)
+	if startup.InstallRequired() {
+		startup.Startup(embeddedFiles)
+	}
 
-	// Test python working
-	python()
+	// Initialize the router
+	router := router()
+
+	// Set up the API endpoints
+	api(router)
 
 	// Open browser page
 	//openBrowser()
 
+	// Connect to the scrunt database
 	err := models.InitDB()
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	// Connect to the runtime database
+	err = runtime.InitDB()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Initialize the python instance.
+	// Note we're not deferring finalize here since we need the instance
+	// for as long as scrunt is running.
+	//python.Initialize()
+
 	// Start and run the server
-	err = router.Run(":3000")
+	err = router.Run(":8080")
 	if err != nil {
 		return
 	}
+
+	// Finalize python since we're exiting the program now.
+	//python.Finalize()
 
 	//fileServer := http.FileServer(http.Dir("./.scrunt/frontend")) // New code
 	//http.Handle("/", fileServer)                                  // New code
@@ -48,27 +67,4 @@ func openBrowser() {
 	if err != nil {
 		return
 	}
-}
-
-func python() {
-	pythonPath := startup.GetPathPython("./lib/python3.7")
-	//pythonPath := startup.GetPathPython("./Python-3.7.12/lib/python3.7")
-	fmt.Println(pythonPath)
-
-	err := python3.Py_SetPath(pythonPath)
-	//err := python3.Py_SetPath("./python-3.7.12/lib/python3.7")
-	if err != nil {
-		return
-	}
-
-	python3path, _ := python3.Py_GetPath()
-
-	fmt.Println("python3.Py_GetPath(): ", python3path)
-
-	python3.Py_Initialize()
-
-	python3.PyRun_SimpleString("print('hello world from simple')")
-	python3.PyRun_SimpleString("print('hello world from simple')")
-
-	python3.Py_Finalize()
 }

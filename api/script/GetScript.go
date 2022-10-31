@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt/script"
 	"strconv"
 )
 
@@ -16,7 +16,7 @@ func GetScript(c *gin.Context) {
 		return
 	}
 
-	script, err := models.SelectScript(id)
+	script, err := script.SelectScript(id)
 	jsonScript, err := json.Marshal(script)
 	fmt.Println(string(jsonScript))
 

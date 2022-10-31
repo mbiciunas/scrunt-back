@@ -3,7 +3,7 @@ package credential
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt/credential"
 	"strconv"
 )
 
@@ -14,7 +14,7 @@ func DeleteCredential(c *gin.Context) {
 		return
 	}
 
-	rows, err := models.DeleteCredential(id)
+	rows, err := credential.DeleteCredential(id)
 	if err == nil {
 		c.Header("Content-Type", "application/json")
 		c.JSON(http.StatusOK, rows)

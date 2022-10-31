@@ -11,11 +11,21 @@ const SCRUNT = ".scrunt"
 const FRONT = "frontend"
 const PYTHON = "python"
 const DATABASE = "database"
+const LIBSCRUNT = "libscrunt"
 
 var pathScrunt = filepath.Join(SCRUNT)
 var pathFront = filepath.Join(SCRUNT, FRONT)
 var pathPython = filepath.Join(SCRUNT, PYTHON)
 var pathDatabase = filepath.Join(SCRUNT, DATABASE)
+var pathLibScrunt = filepath.Join(SCRUNT, LIBSCRUNT)
+
+func GetDirectoryLibScrunt() string {
+	return pathLibScrunt
+}
+
+func GetDirectoryScrunt() string {
+	return pathScrunt
+}
 
 func GetPathScrunt(filename string) string {
 	return filepath.Join(SCRUNT, filename)
@@ -50,21 +60,6 @@ func makeDirectory() {
 	if err != nil {
 		log.Println(err)
 	}
-
-	//err = os.MkdirAll(pathFront, 0700)
-	//if err != nil {
-	//	log.Println(err)
-	//}
-
-	//err = os.MkdirAll(pathPython, 0700)
-	//if err != nil {
-	//	log.Println(err)
-	//}
-
-	//err = os.MkdirAll(pathDatabase, 0600)
-	//if err != nil {
-	//	log.Println(err)
-	//}
 
 	fmt.Println("*************************************")
 }

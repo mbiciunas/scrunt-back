@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt/credential"
 )
 
 type data struct {
@@ -21,7 +21,7 @@ func PostCredential(c *gin.Context) {
 		fmt.Println("Type: ", json.CredType)
 		fmt.Println("credential: ", json.Credential)
 
-		id, err := models.InsertCredential(json.Name, json.CredType, json.Credential)
+		id, err := credential.InsertCredential(json.Name, json.CredType, json.Credential)
 		if err != nil || id <= 0 {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err})
 			return

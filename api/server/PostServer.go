@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt/server"
 )
 
 type data struct {
@@ -19,7 +19,7 @@ func PostServer(c *gin.Context) {
 		fmt.Println("Name: ", json.Name)
 		fmt.Println("Address: ", json.Address)
 
-		id, err := models.InsertServer(json.Name, json.Address)
+		id, err := server.InsertServer(json.Name, json.Address)
 		if err != nil || id <= 0 {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err})
 			return
