@@ -46,6 +46,7 @@ func api(router *gin.Engine) {
 	api.GET("/keytypes", keytype.GetAllKeyType)
 
 	api.GET("/services", service.GetAllService)
+	api.POST("/services", service.PostService)
 
 	api.GET("/servicetypes", servicetype.GetAllServiceType)
 
