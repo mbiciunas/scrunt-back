@@ -39,7 +39,7 @@ func SelectKeysAll() ([]KeyAll, error) {
         LEFT OUTER JOIN key_types kt ON k.key_type_id = kt.id
         LEFT OUTER JOIN service_keys sk ON k.id = sk.key_id
         LEFT OUTER JOIN services s ON sk.service_id = s.id
-        ORDER BY s.id`)
+        ORDER BY k.id`)
 	if err != nil {
 		return nil, err
 	}
