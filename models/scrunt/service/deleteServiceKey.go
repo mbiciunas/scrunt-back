@@ -37,6 +37,7 @@ func DeleteServiceKey(serviceKeyId int) (int64, error) {
 
 func deleteServiceKey(tx *sql.Tx, id int) (int64, error) {
 	statement, err := tx.Prepare(`DELETE FROM service_keys WHERE id = ?`)
+	fmt.Println("deleteServicekey.deleteServiceKey - statement", statement, id)
 	if err != nil {
 		return 0, err
 	}
