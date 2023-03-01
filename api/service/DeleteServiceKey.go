@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"scrunt-back/models/scrunt/service"
+	"scrunt-back/models/scrunt/servicekey"
 	"strconv"
 )
 
@@ -18,7 +18,7 @@ func DeleteServiceKey(c *gin.Context) {
 		return
 	}
 
-	rows, err := service.DeleteServiceKey(serviceKeyId)
+	rows, err := servicekey.DeleteServiceKey(serviceKeyId)
 	if err == nil {
 		c.Header("Content-Type", "application/json")
 		c.JSON(http.StatusOK, rows)

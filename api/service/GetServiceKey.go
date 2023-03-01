@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"scrunt-back/models/scrunt/service"
+	"scrunt-back/models/scrunt/servicekey"
 	"strconv"
 )
 
@@ -16,7 +16,7 @@ func GetServiceKey(c *gin.Context) {
 		return
 	}
 
-	serviceKey, err := service.SelectServiceKeys(id)
+	serviceKey, err := servicekey.SelectServiceKeys(id)
 	jsonScript, err := json.Marshal(serviceKey)
 	fmt.Println(string(jsonScript))
 

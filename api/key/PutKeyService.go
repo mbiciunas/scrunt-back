@@ -1,4 +1,4 @@
-package service
+package key
 
 import (
 	"fmt"
@@ -13,7 +13,7 @@ type ServiceKeyData struct {
 	KeyId     int `json:"KeyId" binding:"required"`
 }
 
-func PutServiceKey(c *gin.Context) {
+func PutKeyService(c *gin.Context) {
 	var json ServiceKeyData
 
 	fmt.Println("c.Keys: ", c.Keys)

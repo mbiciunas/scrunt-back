@@ -1,4 +1,4 @@
-package service
+package key
 
 import (
 	"fmt"
@@ -12,13 +12,11 @@ type dataServiceKey struct {
 	ServiceId uint `form:"serviceid" json:"serviceid" binding:"required"`
 }
 
-func PostServiceKey(c *gin.Context) {
+func PostKeyService(c *gin.Context) {
 	var json dataServiceKey
 
 	if err := c.ShouldBindJSON(&json); err == nil {
-		fmt.Println("PostServiceKey.PostServiceKey - json.KeyId:", json.KeyId, "json.ServiceId", json.ServiceId)
-		fmt.Println("KeyId: ", json.KeyId)
-		fmt.Println("ServiceId: ", json.ServiceId)
+		fmt.Println("PostKeyService.PostKeyService - json.KeyId:", json.KeyId, "json.ServiceId", json.ServiceId)
 
 		id, err := servicekey.InsertServiceKey(json.KeyId, json.ServiceId)
 		if err != nil || id <= 0 {
