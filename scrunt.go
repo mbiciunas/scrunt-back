@@ -2,10 +2,11 @@ package main
 
 import (
 	"embed"
-	"github.com/pkg/browser"
+	//"github.com/pkg/browser"
 	"log"
-	"scrunt-back/models"
 	"scrunt-back/models/runtime"
+	"scrunt-back/models/scrunt"
+	"scrunt-back/models/store"
 	"scrunt-back/startup"
 )
 
@@ -27,8 +28,14 @@ func main() {
 	// Open browser page
 	//openBrowser()
 
+	// Connect to the store database
+	err := store.InitDB()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	// Connect to the scrunt database
-	err := models.InitDB()
+	err = scrunt.InitDB()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -62,9 +69,9 @@ func main() {
 	//}
 }
 
-func openBrowser() {
-	err := browser.OpenURL("http://localhost:8080")
-	if err != nil {
-		return
-	}
-}
+//func openBrowser() {
+//	err := browser.OpenURL("http://localhost:8080")
+//	if err != nil {
+//		return
+//	}
+//}

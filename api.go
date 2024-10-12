@@ -41,11 +41,22 @@ func api(router *gin.Engine) {
 	api.POST("/keys", key.PostKey)
 	api.GET("/keys/:id", key.GetKey)
 	api.PUT("/keys/:id", key.PutKey)
+	api.GET("/keys/:id/services", key.GetKeyService)
+	api.POST("/keys/:id/services", key.PostKeyService)
 	api.DELETE("/keys/:id", key.DeleteKey)
+	api.PUT("/keys/:id/services/:servicekeyid", key.PutKeyService)
 
 	api.GET("/keytypes", keytype.GetAllKeyType)
 
 	api.GET("/services", service.GetAllService)
+	api.POST("/services", service.PostService)
+	api.GET("/services/:id", service.GetService)
+	api.PUT("/services/:id", service.PutService)
+	api.GET("/services/:id/keys", service.GetServiceKey)
+	api.POST("/services/:id/keys", service.PostServiceKey)
+	api.DELETE("/services/:id/keys/:servicekeyid", service.DeleteServiceKey)
+	api.PUT("/services/:id/keys/:servicekeyid", service.PutServiceKey)
+	api.GET("/services/:id/scripts", service.GetServiceScript)
 
 	api.GET("/servicetypes", servicetype.GetAllServiceType)
 
@@ -61,10 +72,44 @@ func api(router *gin.Engine) {
 	api.POST("/scripts", script.PostScript)
 	api.GET("/scripts/:id", script.GetScript)
 	api.PUT("/scripts/:id", script.PutScript)
-	api.POST("/scripts/:id/run", script.PostScriptRun)
 	api.DELETE("/scripts/:id", script.DeleteScript)
+	api.POST("/scripts/:id/run", script.PostScriptRun)
+	api.GET("/scripts/:id/services", script.GetScriptService)
+	api.POST("/scripts/:id/services", script.PostScriptServiceType)
+	api.DELETE("/scripts/:id/services/:scriptservicetypeid", script.DeleteScriptServiceType)
+	api.PUT("/scripts/:id/services/:scriptservicetypeid", script.PutScriptServiceType)
 
 	//api.GET("/outputs/:id", script.GetOutput)
 	api.POST("/outputs", output.PostOutput)
 	api.GET("/outputs/script/:runid/:id", output.GetOutputByRunId)
+
+	api.GET("/store/scripts", script.GetAllScript)
+	api.POST("/store/scripts", script.PostScript)
+	api.GET("/store/scripts/:id", script.GetScript)
+	api.PUT("/store/scripts/:id", script.PutScript)
+	api.DELETE("/store/scripts/:id", script.DeleteScript)
+	api.POST("/store/scripts/:id/run", script.PostScriptRun)
+	api.GET("/store/scripts/:id/services", script.GetScriptService)
+	api.POST("/store/scripts/:id/services", script.PostScriptServiceType)
+	api.DELETE("/store/scripts/:id/services/:scriptservicetypeid", script.DeleteScriptServiceType)
+	api.PUT("/store/scripts/:id/services/:scriptservicetypeid", script.PutScriptServiceType)
+
+	storeScripts(router)
+}
+
+func storeScripts(router *gin.Engine) {
+	// Setup route group for the API
+	api := router.Group("/store")
+	{
+		api.GET("/scripts", script.GetAllScript)
+		api.POST("/scripts", script.PostScript)
+		api.GET("/scripts/:id", script.GetScript)
+		api.PUT("/scripts/:id", script.PutScript)
+		api.DELETE("/scripts/:id", script.DeleteScript)
+		api.POST("/scripts/:id/run", script.PostScriptRun)
+		api.GET("/scripts/:id/services", script.GetScriptService)
+		api.POST("/scripts/:id/services", script.PostScriptServiceType)
+		api.DELETE("/scripts/:id/services/:scriptservicetypeid", script.DeleteScriptServiceType)
+		api.PUT("/scripts/:id/services/:scriptservicetypeid", script.PutScriptServiceType)
+	}
 }

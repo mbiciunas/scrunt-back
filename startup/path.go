@@ -12,6 +12,7 @@ const FRONT = "frontend"
 const PYTHON = "python"
 const DATABASE = "database"
 const LIBSCRUNT = "libscrunt"
+const RUNTIME = "runtime"
 
 var pathScrunt = filepath.Join(SCRUNT)
 var pathFront = filepath.Join(SCRUNT, FRONT)
@@ -25,6 +26,10 @@ func GetDirectoryLibScrunt() string {
 
 func GetDirectoryScrunt() string {
 	return pathScrunt
+}
+
+func GetDirectoryRuntime() string {
+	return filepath.Join(SCRUNT, RUNTIME)
 }
 
 func GetPathScrunt(filename string) string {

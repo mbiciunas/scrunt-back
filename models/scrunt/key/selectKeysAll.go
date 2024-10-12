@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt"
 )
 
 type service struct {
@@ -27,7 +27,7 @@ var oldKeyId int
 func SelectKeysAll() ([]KeyAll, error) {
 	keyAll = nil
 
-	statement, err := models.Db.Prepare(
+	statement, err := scrunt.Db.Prepare(
 		`SELECT k.id AS "key_id",
             k.name,
             k.description,
@@ -39,7 +39,7 @@ func SelectKeysAll() ([]KeyAll, error) {
         LEFT OUTER JOIN key_types kt ON k.key_type_id = kt.id
         LEFT OUTER JOIN service_keys sk ON k.id = sk.key_id
         LEFT OUTER JOIN services s ON sk.service_id = s.id
-        ORDER BY s.id`)
+        ORDER BY k.id`)
 	if err != nil {
 		return nil, err
 	}

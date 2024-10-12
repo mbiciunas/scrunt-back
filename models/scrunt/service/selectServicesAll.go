@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt"
 )
 
 type project struct {
@@ -31,7 +31,7 @@ var oldServiceId int
 func SelectServicesAll() ([]ServiceAll, error) {
 	serviceAll = nil
 
-	statement, err := models.Db.Prepare(
+	statement, err := scrunt.Db.Prepare(
 		`SELECT s.id AS "serv_id",
             s.name,
             s.description,

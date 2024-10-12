@@ -3,11 +3,11 @@ package server
 import (
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt"
 )
 
 func InsertServer(name string, address string) (int64, error) {
-	statement, err := models.Db.Prepare(`INSERT INTO servers (name, address) VALUES (?, ?)`)
+	statement, err := scrunt.Db.Prepare(`INSERT INTO servers (name, address) VALUES (?, ?)`)
 	if err != nil {
 		return 0, err
 	}

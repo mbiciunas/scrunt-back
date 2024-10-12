@@ -3,11 +3,11 @@ package key
 import (
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt"
 )
 
 func InsertKey(name string, description string, keytype uint, keyprivate string, keypublic string) (int64, error) {
-	statement, err := models.Db.Prepare(`INSERT INTO keys (name, description, key_type_id, private, public) VALUES (?, ?, ?, ?, ?)`)
+	statement, err := scrunt.Db.Prepare(`INSERT INTO keys (name, description, key_type_id, private, public) VALUES (?, ?, ?, ?, ?)`)
 	if err != nil {
 		return 0, err
 	}
