@@ -2,7 +2,7 @@ package credential
 
 import (
 	_ "github.com/mattn/go-sqlite3"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt"
 )
 
 type Credential struct {
@@ -13,7 +13,7 @@ type Credential struct {
 }
 
 func SelectCredential(id int) (Credential, error) {
-	statement, err := models.Db.Prepare(`SELECT id, name, type, credential FROM credentials WHERE id = $1`)
+	statement, err := scrunt.Db.Prepare(`SELECT id, name, type, credential FROM credentials WHERE id = $1`)
 	if err != nil {
 		return Credential{}, err
 	}

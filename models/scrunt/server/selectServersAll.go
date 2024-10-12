@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt"
 )
 
 type credential struct {
@@ -27,7 +27,7 @@ var oldServerId int
 func SelectServersAll() ([]ServerAll, error) {
 	serverAll = nil
 
-	statement, err := models.Db.Prepare(
+	statement, err := scrunt.Db.Prepare(
 		`SELECT s.id AS "serv_id",
 			s.name,
 			s.address,

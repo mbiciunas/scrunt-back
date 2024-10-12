@@ -3,7 +3,7 @@ package key
 import (
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt"
 )
 
 type Key struct {
@@ -16,7 +16,7 @@ type Key struct {
 }
 
 func SelectKey(id int) (Key, error) {
-	statement, err := models.Db.Prepare(`SELECT id, name, description, key_type_id, public, private FROM keys WHERE id = $1`)
+	statement, err := scrunt.Db.Prepare(`SELECT id, name, description, key_type_id, public, private FROM keys WHERE id = $1`)
 	if err != nil {
 		fmt.Println("SelectKey - prepare", err)
 		return Key{}, err

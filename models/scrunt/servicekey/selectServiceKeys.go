@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt"
 )
 
 type ServiceKey struct {
@@ -22,7 +22,7 @@ func SelectServiceKeys(serviceId int) ([]ServiceKey, error) {
 	serviceKeys = nil
 
 	fmt.Println("models.selectServiceKeys")
-	statement, err := models.Db.Prepare(
+	statement, err := scrunt.Db.Prepare(
 		`SELECT sk.id AS "service_key_id",
 			k.id AS "key_id",
 			k.name,

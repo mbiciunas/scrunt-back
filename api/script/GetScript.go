@@ -11,6 +11,7 @@ import (
 
 func GetScript(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
+	fmt.Println("id = " + string(id))
 	if err != nil || id < 1 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err})
 		return

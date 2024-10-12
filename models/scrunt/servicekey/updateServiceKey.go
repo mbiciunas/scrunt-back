@@ -3,11 +3,11 @@ package servicekey
 import (
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt"
 )
 
 func UpdateServiceKey(serviceKeyId int, serviceId int, keyId int) (int64, error) {
-	statement, err := models.Db.Prepare(`UPDATE service_keys SET key_id=?, service_id=? WHERE id = ?`)
+	statement, err := scrunt.Db.Prepare(`UPDATE service_keys SET key_id=?, service_id=? WHERE id = ?`)
 	if err != nil {
 		return 0, err
 	}

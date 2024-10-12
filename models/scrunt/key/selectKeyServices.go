@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt"
 )
 
 type KeyService struct {
@@ -22,7 +22,7 @@ func SelectKeyServices(keyId int) ([]KeyService, error) {
 	keyServices = nil
 
 	fmt.Println("models.selectKeyServices")
-	statement, err := models.Db.Prepare(
+	statement, err := scrunt.Db.Prepare(
 		`SELECT sk.id AS "service_key_id",
 			s.id AS "key_id",
 			s.name,

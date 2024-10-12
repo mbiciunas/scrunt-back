@@ -5,11 +5,11 @@ import (
 	"errors"
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt"
 )
 
 func DeleteServiceKey(serviceKeyId int) (int64, error) {
-	tx, err := models.Db.Begin()
+	tx, err := scrunt.Db.Begin()
 	if err != nil {
 		return 0, err
 	}

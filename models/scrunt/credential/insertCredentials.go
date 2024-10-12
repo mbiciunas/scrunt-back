@@ -3,11 +3,11 @@ package credential
 import (
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt"
 )
 
 func InsertCredential(name string, credtype string, credential string) (int64, error) {
-	statement, err := models.Db.Prepare(`INSERT INTO credentials (name, type, credential) VALUES (?, ?, ?)`)
+	statement, err := scrunt.Db.Prepare(`INSERT INTO credentials (name, type, credential) VALUES (?, ?, ?)`)
 	if err != nil {
 		return 0, err
 	}

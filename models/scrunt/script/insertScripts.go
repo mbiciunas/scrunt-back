@@ -3,11 +3,11 @@ package script
 import (
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt"
 )
 
 func InsertScript(name string, description string, code string) (int64, error) {
-	statement, err := models.Db.Prepare(`INSERT INTO scripts (name, description, code) VALUES (?, ?, ?)`)
+	statement, err := scrunt.Db.Prepare(`INSERT INTO scripts (name, description, code) VALUES (?, ?, ?)`)
 	if err != nil {
 		return 0, err
 	}

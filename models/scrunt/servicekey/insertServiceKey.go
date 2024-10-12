@@ -3,12 +3,12 @@ package servicekey
 import (
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt"
 )
 
 func InsertServiceKey(keyId uint, serviceId uint) (int64, error) {
 	fmt.Println("insertServiceKey.InsertServiceKey - keyId:", keyId, "serviceId", serviceId)
-	statement, err := models.Db.Prepare(`INSERT INTO service_keys (key_id, service_id) VALUES (?, ?)`)
+	statement, err := scrunt.Db.Prepare(`INSERT INTO service_keys (key_id, service_id) VALUES (?, ?)`)
 	if err != nil {
 		return 0, err
 	}

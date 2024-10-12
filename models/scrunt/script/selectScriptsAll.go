@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt"
 )
 
 type ScriptAll struct {
@@ -20,7 +20,7 @@ func SelectScriptsAll() ([]ScriptAll, error) {
 	scriptAll = nil
 
 	fmt.Println("models.selectScriptsAll")
-	statement, err := models.Db.Prepare(
+	statement, err := scrunt.Db.Prepare(
 		`SELECT s.id,
 			s.name,
 			s.description,

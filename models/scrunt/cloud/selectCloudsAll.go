@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt"
 )
 
 type CloudAll struct {
@@ -21,7 +21,7 @@ func SelectCloudAll() ([]CloudAll, error) {
 
 	fmt.Println("models.selectCloudsAll - SelectCloudAll")
 
-	statement, err := models.Db.Prepare(
+	statement, err := scrunt.Db.Prepare(
 		`SELECT c.id,
             c.name,
             c.description,

@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt"
 )
 
 type ScriptService struct {
@@ -19,7 +19,7 @@ func SelectScriptServices(scriptId int) ([]ScriptService, error) {
 	scriptServices = nil
 
 	fmt.Println("models.selectScriptServices")
-	statement, err := models.Db.Prepare(
+	statement, err := scrunt.Db.Prepare(
 		`SELECT sst.id,
 			sst.name,
 			sst.service_type_id

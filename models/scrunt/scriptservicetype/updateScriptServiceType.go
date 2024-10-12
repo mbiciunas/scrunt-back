@@ -3,11 +3,11 @@ package scriptservicetype
 import (
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt"
 )
 
 func UpdateScriptServiceType(scriptServiceTypeId, scriptId, serviceTypeId int, name string) (int64, error) {
-	statement, err := models.Db.Prepare(`UPDATE script_service_types SET script_id=?, service_type_id=?, name=? WHERE id = ?`)
+	statement, err := scrunt.Db.Prepare(`UPDATE script_service_types SET script_id=?, service_type_id=?, name=? WHERE id = ?`)
 	if err != nil {
 		return 0, err
 	}

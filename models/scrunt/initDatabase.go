@@ -1,4 +1,4 @@
-package models
+package scrunt
 
 import (
 	"database/sql"

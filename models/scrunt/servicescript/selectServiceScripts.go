@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
-	"scrunt-back/models"
+	"scrunt-back/models/scrunt"
 )
 
 type ServiceScript struct {
@@ -18,7 +18,7 @@ var serviceScripts []ServiceScript
 func SelectServiceScripts(serviceId int) ([]ServiceScript, error) {
 	serviceScripts = nil
 
-	statement, err := models.Db.Prepare(
+	statement, err := scrunt.Db.Prepare(
 		`SELECT DISTINCT sc.id AS "script_id",
                       sc.name AS "script_name",
                       sc.description AS "script_description"
