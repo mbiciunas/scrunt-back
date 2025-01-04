@@ -23,13 +23,20 @@ func main() {
 	router := router()
 
 	// Set up the API endpoints
-	api(router)
+	apiScrunt(router)
+	apiStore(router)
 
 	// Open browser page
 	//openBrowser()
 
+	// Connect to the store database with Gorm
+	err := store.InitGorm()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	// Connect to the store database
-	err := store.InitDB()
+	err = store.InitDB()
 	if err != nil {
 		log.Fatal(err)
 	}
