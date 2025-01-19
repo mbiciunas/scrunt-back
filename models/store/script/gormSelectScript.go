@@ -2,7 +2,6 @@ package script
 
 import (
 	"fmt"
-	_ "github.com/mattn/go-sqlite3"
 	"scrunt-back/models/store"
 	"strings"
 )
