@@ -3,11 +3,11 @@ module scrunt-back
 go 1.23
 
 require (
-	github.com/gin-gonic/contrib v0.0.0-20240508051311-c1c6bf0061b0
+	github.com/gin-gonic/contrib v0.0.0-20250113154928-93b827325fec
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-sql-driver/mysql v1.8.1
 	github.com/mattn/go-sqlite3 v1.14.24
-	github.com/satori/go.uuid v1.2.0
+	//github.com/satori/go.uuid v1.2.0
 	gorm.io/driver/mysql v1.5.7
 	gorm.io/driver/sqlite v1.5.7
 	gorm.io/gorm v1.25.12
