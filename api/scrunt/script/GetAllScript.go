@@ -8,7 +8,7 @@ import (
 )
 
 func GetAllScript(c *gin.Context) {
-	scripts, err := script.SelectScriptsAll()
+	scripts, err := script.GormSelectScriptsAll()
 	fmt.Println("Script.GetAllScript - scripts", scripts)
 	if err == nil {
 		c.Header("Content-Type", "application/json")

@@ -41,6 +41,12 @@ func main() {
 		log.Fatal(err)
 	}
 
+	// Connect to the scrunt database with Gorm
+	err = scrunt.InitGorm()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	// Connect to the scrunt database
 	err = scrunt.InitDB()
 	if err != nil {
