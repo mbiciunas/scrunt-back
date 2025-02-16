@@ -21,9 +21,9 @@ func storeScripts(router *gin.Engine) {
 		api.GET("/scripts/:scriptId/issues", script.GetScriptIssueAll)
 		api.GET("/scripts/:scriptId/services", script.GetScriptService)
 		api.POST("/scripts/:scriptId/services", script.PostScriptServiceType)
-		api.GET("/scripts/:scriptId/versions", script.GetScriptVersionAll)
-		api.GET("/scripts/:scriptId/versions/:versionId/codes", script.GetScriptVersionCode)
 		api.DELETE("/scripts/:scriptId/services/:scriptservicetypeid", script.DeleteScriptServiceType)
 		api.PUT("/scripts/:scriptId/services/:scriptservicetypeid", script.PutScriptServiceType)
+		api.GET("/scripts/:scriptId/versions", script.GetScriptVersionAll)
+		api.GET("/scripts/:scriptId/versions/:versionId/codes", script.GetScriptVersionCode)
 	}
 }

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"scrunt-back/models/store/version"
+	"scrunt-back/models/scrunt/version"
 	"strconv"
 )
 
@@ -17,9 +17,9 @@ func GetScriptVersionAll(c *gin.Context) {
 	}
 
 	versions, err := version.GormSelectVersionsAll(scriptId)
-	fmt.Println("store.script.GetScriptVersionsAll - codes", versions)
+	fmt.Println("store.script.GetScriptVersionAll - codes", versions)
 	if err != nil {
-		fmt.Println("store.script.GetScriptVersionsAll - err = ", err)
+		fmt.Println("store.script.GetScriptVersionAll - err = ", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err})
 		return
 	}

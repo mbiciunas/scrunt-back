@@ -49,7 +49,7 @@ type Version struct {
 	Major           int64            `json:"major"`
 	Minor           int64            `json:"minor"`
 	Patch           int              `json:"patch"`
-	Commit          int              `json:"commit"`
+	Save            int              `json:"save"`
 	Uuid            string           `json:"uuid"`
 	Change          string           `json:"change"`
 	VersionCodes    []VersionCode    `gorm:"foreignkey:VersionId"`
@@ -68,6 +68,7 @@ type VersionCode struct {
 	Id        uint `json:"id" gorm:"primarykey"`
 	VersionId uint `json:"version_id"`
 	CodeId    uint `json:"code_id"`
+	SortOrder uint `json:"sort_order"`
 }
 
 type VersionService struct {

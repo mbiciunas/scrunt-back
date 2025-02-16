@@ -50,6 +50,8 @@ func main() {
 	local.InsertScripts(db)
 	local.InsertScriptTags(db)
 	local.InsertVersions(db)
+	local.InsertCodes(db)
+	local.InsertVersionCodes(db)
 
 	// Create a new user in our database.
 	db.Create(&local.Script{
