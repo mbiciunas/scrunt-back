@@ -1,36 +1,17 @@
 package local
 
 import (
-	"encoding/json"
 	"fmt"
-	"gorm.io/gorm"
+	"scrunt-back/models/scrunt/tagtype"
 )
 
-// Tag Types
-var tagTypePurpose TagType
+var tagTypeIdPurpose uint
 
-func InsertTagTypes(db *gorm.DB) {
+func InsertTagTypes() (err error) {
 	fmt.Println("Insert Tag Types")
 
-	tagTypePurpose = TagType{Name: "Purpose", Desc: "The purpose of the script"}
+	tagTypeIdPurpose, err = tagtype.GormInsertTagType("Purpose", "The purpose of the script")
+	fmt.Println("Inserted a tag type", tagTypeIdPurpose)
 
-	db.Create(&tagTypePurpose)
-}
-
-func InsertOther(db *gorm.DB) {
-	fmt.Println("Insert Tag Types")
-
-	// Create a new user in our database.
-
-	db.Create(&tagTypePurpose)
-	fmt.Println(tagTypePurpose.Id)
-
-	// Find all of our scripts.
-	var tags []Tag
-	db.Find(&tags)
-
-	// Output the users from the DB json encoded
-	jsonEncoded, _ := json.Marshal(&tags)
-	fmt.Println(string(jsonEncoded))
-
+	return err
 }

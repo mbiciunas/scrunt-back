@@ -2,7 +2,7 @@ package script
 
 import (
 	"fmt"
-	"scrunt-back/models/store"
+	"scrunt-back/models/scrunt"
 	"strings"
 )
 
@@ -37,7 +37,7 @@ func GormSelectScript(id int) (GormScript, error) {
 
 	var output GormScript
 
-	errGorm := store.GormDB.Raw(query.String(), id).Scan(&output)
+	errGorm := scrunt.GormDB.Raw(query.String(), id).Scan(&output)
 
 	if errGorm.Error != nil {
 		fmt.Println("store.script.gormSelectScript - errGorm: ", errGorm)

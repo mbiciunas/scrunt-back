@@ -2,25 +2,22 @@ package local
 
 import (
 	"fmt"
-	"gorm.io/gorm"
+	"scrunt-back/models/scrunt/scripttag"
 )
 
 // ScriptTags
-var scriptTagEc2Install ScriptTag
-var scriptTagMysqlBackup ScriptTag
-var scriptTagMysqlRestore ScriptTag
-var scriptTagChatgptOther ScriptTag
+var scriptTagIdEc2Install uint
+var scriptTagIdMysqlBackup uint
+var scriptTagIdMysqlRestore uint
+var scriptTagIdChatgptOther uint
 
-func InsertScriptTags(db *gorm.DB) {
+func InsertScriptTags() (err error) {
 	fmt.Println("Insert Script Tags")
 
-	scriptTagEc2Install = ScriptTag{ScriptId: scriptEC2.Id, TagId: tagInstall.Id}
-	scriptTagMysqlBackup = ScriptTag{ScriptId: scriptMySQL.Id, TagId: tagBackup.Id}
-	scriptTagMysqlRestore = ScriptTag{ScriptId: scriptMySQL.Id, TagId: tagRestore.Id}
-	scriptTagChatgptOther = ScriptTag{ScriptId: scriptChatGPT.Id, TagId: tagOther.Id}
+	scriptTagIdEc2Install, err = scripttag.GormInsertScriptTag(scriptIdEC2, tagIdInstall)
+	scriptTagIdMysqlBackup, err = scripttag.GormInsertScriptTag(scriptIdMySQL, tagIdBackup)
+	scriptTagIdMysqlRestore, err = scripttag.GormInsertScriptTag(scriptIdMySQL, tagIdRestore)
+	scriptTagIdChatgptOther, err = scripttag.GormInsertScriptTag(scriptIdChatGPT, tagIdOther)
 
-	db.Create(&scriptTagEc2Install)
-	db.Create(&scriptTagMysqlBackup)
-	db.Create(&scriptTagMysqlRestore)
-	db.Create(&scriptTagChatgptOther)
+	return err
 }

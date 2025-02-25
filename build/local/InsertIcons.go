@@ -2,46 +2,36 @@ package local
 
 import (
 	"fmt"
-	"gorm.io/gorm"
+	"scrunt-back/models/scrunt/icon"
 )
 
 // Icons
-var iconAws Icon
-var iconEc2 Icon
-var iconS3 Icon
-var iconMariadb Icon
-var iconChatgpt Icon
-var iconLockupb Icon
-var iconLogomarkb Icon
-var iconLockupw Icon
-var iconLogomarkw Icon
-var iconMysql Icon
-var iconStripe Icon
+var iconIdAws uint
+var iconIdEc2 uint
+var iconIdS3 uint
+var iconIdMariadb uint
+var iconIdChatgpt uint
+var iconIdLockupb uint
+var iconIdLogomarkb uint
+var iconIdLockupw uint
+var iconIdLogomarkw uint
+var iconIdMysql uint
+var iconIdStripe uint
 
-func InsertIcons(db *gorm.DB) {
+func InsertIcons() (err error) {
 	fmt.Println("Insert Icons")
 
-	iconAws = Icon{Code: "aws.aws", Directory: "aws", Filename: "aws.svg"}
-	iconEc2 = Icon{Code: "aws.ec2", Directory: "aws", Filename: "ec2.svg"}
-	iconS3 = Icon{Code: "aws.s3", Directory: "aws", Filename: "s3.svg"}
-	iconMariadb = Icon{Code: "mariadb.mariadb", Directory: "mariadb", Filename: "mariadb.svg"}
-	iconChatgpt = Icon{Code: "openai.chatgpt", Directory: "openai", Filename: "chatgpt.svg"}
-	iconLockupb = Icon{Code: "openai.lockup.b", Directory: "openai", Filename: "openai-lockup.svg"}
-	iconLogomarkb = Icon{Code: "openai.logomark.b", Directory: "openai", Filename: "openai-logomark.svg"}
-	iconLockupw = Icon{Code: "openai.lockup.w", Directory: "openai", Filename: "white-lockup.svg"}
-	iconLogomarkw = Icon{Code: "openai.logomark.w", Directory: "openai", Filename: "white-logomark.svg"}
-	iconMysql = Icon{Code: "oracle.mysql", Directory: "oracle", Filename: "mysql.svg"}
-	iconStripe = Icon{Code: "stripe.stripe", Directory: "stripe", Filename: "stripe.svg"}
+	iconIdAws, err = icon.GormInsertIcon("aws.aws", "aws", "aws.svg")
+	iconIdEc2, err = icon.GormInsertIcon("aws.ec2", "aws", "ec2.svg")
+	iconIdS3, err = icon.GormInsertIcon("aws.s3", "aws", "s3.svg")
+	iconIdMariadb, err = icon.GormInsertIcon("mariadb.mariadb", "mariadb", "mariadb.svg")
+	iconIdChatgpt, err = icon.GormInsertIcon("openai.chatgpt", "openai", "chatgpt.svg")
+	iconIdLockupb, err = icon.GormInsertIcon("openai.lockup.b", "openai", "openai-lockup.svg")
+	iconIdLogomarkb, err = icon.GormInsertIcon("openai.logomark.b", "openai", "openai-logomark.svg")
+	iconIdLockupw, err = icon.GormInsertIcon("openai.lockup.w", "openai", "white-lockup.svg")
+	iconIdLogomarkw, err = icon.GormInsertIcon("openai.logomark.w", "openai", "white-logomark.svg")
+	iconIdMysql, err = icon.GormInsertIcon("oracle.mysql", "oracle", "mysql.svg")
+	iconIdStripe, err = icon.GormInsertIcon("stripe.stripe", "stripe", "stripe.svg")
 
-	db.Create(&iconAws)
-	db.Create(&iconEc2)
-	db.Create(&iconS3)
-	db.Create(&iconMariadb)
-	db.Create(&iconChatgpt)
-	db.Create(&iconLockupb)
-	db.Create(&iconLogomarkb)
-	db.Create(&iconLockupw)
-	db.Create(&iconLogomarkw)
-	db.Create(&iconMysql)
-	db.Create(&iconStripe)
+	return err
 }

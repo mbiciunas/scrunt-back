@@ -3,27 +3,22 @@ package local
 import (
 	"fmt"
 	"github.com/google/uuid"
-	"gorm.io/gorm"
+	"scrunt-back/models/scrunt/code"
 )
 
 // ScriptTags
-var codeImport Code
-var codeParameter Code
-var codeMain Code
+var codeIdImport uint
+var codeIdParameter uint
+var codeIdMain uint
 
-func InsertCodes(db *gorm.DB) {
+func InsertCodes() (err error) {
 	fmt.Println("Insert Codes")
 
-	codeImport = Code{Type: "import", Value: "import libscrunt\\nimport libtest"}
-	codeImport.Uuid = genCodeUUID(codeImport.Type, codeImport.Value)
-	codeParameter = Code{Type: "parameter", Value: "ask('name', 'bla', 'bla')"}
-	codeParameter.Uuid = genCodeUUID(codeParameter.Type, codeParameter.Value)
-	codeMain = Code{Type: "main", Value: "This is some code..."}
-	codeMain.Uuid = genCodeUUID(codeMain.Type, codeMain.Value)
+	codeIdImport, err = code.GormInsertCode("import", "import libscrunt\\nimport libtest", genCodeUUID("import", "import libscrunt\\nimport libtest"))
+	codeIdParameter, err = code.GormInsertCode("parameter", "ask('name', 'bla', 'bla')", genCodeUUID("parameter", "ask('name', 'bla', 'bla')"))
+	codeIdMain, err = code.GormInsertCode("main", "This is some code...", genCodeUUID("main", "This is some code..."))
 
-	db.Create(&codeImport)
-	db.Create(&codeParameter)
-	db.Create(&codeMain)
+	return err
 }
 
 func genCodeUUID(codeType string, value string) string {

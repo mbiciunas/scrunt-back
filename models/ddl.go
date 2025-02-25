@@ -1,4 +1,4 @@
-package local
+package models
 
 import (
 	"time"
@@ -46,8 +46,8 @@ type Version struct {
 	Id              uint             `json:"id" gorm:"primarykey"`
 	ScriptId        uint             `json:"script_id"`
 	Created         time.Time        `json:"service_type_id"`
-	Major           int64            `json:"major"`
-	Minor           int64            `json:"minor"`
+	Major           int              `json:"major"`
+	Minor           int              `json:"minor"`
 	Patch           int              `json:"patch"`
 	Save            int              `json:"save"`
 	Uuid            string           `json:"uuid"`

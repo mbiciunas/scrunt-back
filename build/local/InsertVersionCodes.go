@@ -2,22 +2,20 @@ package local
 
 import (
 	"fmt"
-	"gorm.io/gorm"
+	"scrunt-back/models/scrunt/versioncode"
 )
 
 // ScriptTags
-var versionCode1 VersionCode
-var versionCode2 VersionCode
-var versionCode3 VersionCode
+var versionCodeId1 uint
+var versionCodeId2 uint
+var versionCodeId3 uint
 
-func InsertVersionCodes(db *gorm.DB) {
-	fmt.Println("Insert Versions")
+func InsertVersionCodes() (err error) {
+	fmt.Println("Insert Version Codes")
 
-	versionCode1 = VersionCode{VersionId: scriptEC2.Id, CodeId: codeImport.Id, SortOrder: 1}
-	versionCode2 = VersionCode{VersionId: scriptEC2.Id, CodeId: codeParameter.Id, SortOrder: 2}
-	versionCode3 = VersionCode{VersionId: scriptEC2.Id, CodeId: codeMain.Id, SortOrder: 3}
+	versionCodeId1, err = versioncode.GormInsertVersionCode(scriptIdEC2, codeIdImport, 1)
+	versionCodeId2, err = versioncode.GormInsertVersionCode(scriptIdEC2, codeIdParameter, 2)
+	versionCodeId3, err = versioncode.GormInsertVersionCode(scriptIdEC2, codeIdMain, 3)
 
-	db.Create(&versionCode1)
-	db.Create(&versionCode2)
-	db.Create(&versionCode3)
+	return err
 }
