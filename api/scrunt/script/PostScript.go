@@ -5,12 +5,13 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"scrunt-back/models/scrunt/script"
+	"time"
 )
 
 type data struct {
-	Name        string `form:"name" json:"name" binding:"required"`
-	Description string `form:"description" json:"description" binding:"required"`
-	Code        string `form:"code" json:"code" binding:"required"`
+	Name      string `form:"name" json:"name" binding:"required"`
+	DescShort string `form:"desc_short" json:"desc_short" binding:"required"`
+	DescLong  string `form:"desc_long" json:"desc_long" binding:"required"`
 }
 
 func PostScript(c *gin.Context) {
@@ -18,10 +19,10 @@ func PostScript(c *gin.Context) {
 
 	if err := c.ShouldBindJSON(&json); err == nil {
 		fmt.Println("Name: ", json.Name)
-		fmt.Println("Description: ", json.Description)
-		fmt.Println("Script: ", json.Code)
+		fmt.Println("Desc Short: ", json.DescShort)
+		fmt.Println("Desc Long: ", json.DescLong)
 
-		id, err := script.InsertScript(json.Name, json.Description, json.Code)
+		id, err := script.GormInsertScript(1, json.Name, json.DescShort, json.DescLong, time.Now())
 		if err != nil || id <= 0 {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err})
 			return

@@ -37,14 +37,9 @@ func GormSelectScriptsAll() ([]GormScriptAll, error) {
 	query.WriteString("FROM scripts AS s ")
 	query.WriteString("LEFT OUTER JOIN icons AS i ")
 	query.WriteString("ON s.icon_id = i.id ")
-	query.WriteString("LEFT OUTER JOIN script_tags AS st ")
-	query.WriteString("ON s.id = st.script_id ")
-	query.WriteString("LEFT OUTER JOIN tags AS t ")
-	query.WriteString("ON st.tag_id = t.id ")
-	query.WriteString("WHERE t.name LIKE \"%\" ")
 	query.WriteString("GROUP BY s.id ")
 
-	//fmt.Println(">>>", query.String(), "<<<")
+	fmt.Println(">>>", query.String(), "<<<")
 
 	var output []GormScriptAll
 	errGorm := scrunt.GormDB.Raw(query.String()).Scan(&output)

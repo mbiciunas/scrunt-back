@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"scrunt-back/models/runtime"
-	"scrunt-back/models/scrunt/script"
+	"scrunt-back/models/store/script"
 	"scrunt-back/python"
 	"strconv"
 )

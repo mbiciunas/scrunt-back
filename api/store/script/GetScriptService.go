@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"scrunt-back/models/scrunt/script"
+	"scrunt-back/models/store/script"
 	"strconv"
 )
 
