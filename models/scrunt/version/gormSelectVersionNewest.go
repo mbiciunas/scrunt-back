@@ -27,14 +27,12 @@ func GormSelectVersionNewest(id int) (GormVersionAll, error) {
 
 	var output GormVersionAll
 
-	errGorm := scrunt.GormDB.Raw(query.String(), id, id).Scan(&output)
+	result := scrunt.GormDB.Raw(query.String(), id, id).Scan(&output)
 
-	if errGorm.Error != nil {
-		fmt.Println("GORM ERROR Raw: ", errGorm)
-		return output, errGorm.Error
+	if result.Error != nil {
+		fmt.Println("GORM ERROR Raw: ", result.Error)
+		return output, result.Error
 	}
-
-	//fmt.Println("GORM selectVersionsAll", output)
 
 	return output, nil
 }
