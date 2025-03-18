@@ -16,7 +16,7 @@ type data struct {
 
 func PostScript(c *gin.Context) {
 	var json data
-
+	//fmt.Println(c.)
 	if err := c.ShouldBindJSON(&json); err == nil {
 		fmt.Println("Name: ", json.Name)
 		fmt.Println("Desc Short: ", json.DescShort)
@@ -32,6 +32,7 @@ func PostScript(c *gin.Context) {
 		c.JSON(http.StatusOK, id)
 
 	} else {
+		fmt.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
 }

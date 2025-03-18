@@ -1,7 +1,6 @@
 package script
 
 import (
-	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"scrunt-back/models/scrunt"
 	"strings"
@@ -15,7 +14,6 @@ type GormScriptAll struct {
 	DescShort string
 	DescLong  string
 	Created   string
-	Rating    float32
 	Tag       string
 }
 
@@ -39,17 +37,12 @@ func GormSelectScriptsAll() ([]GormScriptAll, error) {
 	query.WriteString("ON s.icon_id = i.id ")
 	query.WriteString("GROUP BY s.id ")
 
-	fmt.Println(">>>", query.String(), "<<<")
-
 	var output []GormScriptAll
 	errGorm := scrunt.GormDB.Raw(query.String()).Scan(&output)
 
 	if errGorm.Error != nil {
-		fmt.Println("GORM ERROR Raw: ", errGorm)
 		return nil, errGorm.Error
 	}
-
-	fmt.Println("GORM selectScriptsAll", output)
 
 	return output, nil
 }
