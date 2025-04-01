@@ -7,14 +7,16 @@ import (
 )
 
 type GormScriptAll struct {
-	Id        int
-	Directory string
-	Filename  string
-	Name      string
-	DescShort string
-	DescLong  string
-	Created   string
-	Tag       string
+	Id           int
+	Directory    string
+	Filename     string
+	Name         string
+	DescShort    string
+	DescLong     string
+	ParentMarket string
+	ParentLocal  string
+	Created      string
+	Tag          string
 }
 
 func GormSelectScriptsAll() ([]GormScriptAll, error) {
@@ -26,6 +28,8 @@ func GormSelectScriptsAll() ([]GormScriptAll, error) {
 	query.WriteString("       s.name, ")
 	query.WriteString("       s.desc_short, ")
 	query.WriteString("       s.desc_long, ")
+	query.WriteString("       s.parent_market, ")
+	query.WriteString("       s.parent_local, ")
 	query.WriteString("       s.created, ")
 	query.WriteString("       (SELECT GROUP_CONCAT(t2.name) ")
 	query.WriteString("        FROM tags AS t2")
@@ -34,7 +38,7 @@ func GormSelectScriptsAll() ([]GormScriptAll, error) {
 	query.WriteString("        WHERE s.id = st2.script_id) AS tag ")
 	query.WriteString("FROM scripts AS s ")
 	query.WriteString("LEFT OUTER JOIN icons AS i ")
-	query.WriteString("ON s.icon_id = i.id ")
+	query.WriteString("ON s.icon_code = i.code ")
 	query.WriteString("GROUP BY s.id ")
 
 	var output []GormScriptAll

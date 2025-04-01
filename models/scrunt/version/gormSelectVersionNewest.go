@@ -23,8 +23,6 @@ func GormSelectVersionNewest(id int) (GormVersionAll, error) {
 	query.WriteString("WHERE script_id = ? ")
 	query.WriteString("AND created = (SELECT max(created) from versions WHERE script_id = ?) ")
 
-	fmt.Println(">>>", query.String(), "<<<")
-
 	var output GormVersionAll
 
 	result := scrunt.GormDB.Raw(query.String(), id, id).Scan(&output)

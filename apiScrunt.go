@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"scrunt-back/api/scrunt/cloud"
 	"scrunt-back/api/scrunt/credential"
+	"scrunt-back/api/scrunt/icon"
 	"scrunt-back/api/scrunt/key"
 	"scrunt-back/api/scrunt/keytype"
 	"scrunt-back/api/scrunt/output"
@@ -18,6 +19,7 @@ import (
 func apiScrunt(router *gin.Engine) {
 	scruntClouds(router)
 	scruntCredentials(router)
+	scruntIcons(router)
 	scruntKeys(router)
 	scruntKeyTypes(router)
 	scruntProjects(router)
@@ -51,6 +53,13 @@ func scruntCredentials(router *gin.Engine) {
 		api.GET("/credentials/:id", credential.GetCredential)
 		api.PUT("/credentials/:id", credential.PutCredential)
 		api.DELETE("/credentials/:id", credential.DeleteCredential)
+	}
+}
+
+func scruntIcons(router *gin.Engine) {
+	api := router.Group("/api/scrunt")
+	{
+		api.GET("/icons", icon.GetAllIcon)
 	}
 }
 

@@ -22,12 +22,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	//fmt.Println("Open Sqlite database")
-	//db, err := gorm.Open(sqlite.Open(".scrunt/database/gorm.db"), &gorm.Config{})
-	//if err != nil {
-	//	panic("Failed to open the SQLite database.")
-	//}
-
 	fmt.Println("Auto-migrate to create the tables")
 	err = scrunt.GormDB.AutoMigrate(
 		&models.Script{},

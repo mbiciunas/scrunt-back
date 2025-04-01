@@ -37,7 +37,7 @@ func GormSelectScriptsAll() ([]GormScriptAll, error) {
 	query.WriteString("        WHERE s.id = st2.script_id) AS tag ")
 	query.WriteString("FROM scripts AS s ")
 	query.WriteString("LEFT OUTER JOIN icons AS i ")
-	query.WriteString("ON s.icon_id = i.id ")
+	query.WriteString("ON s.icon_code = i.code ")
 	query.WriteString("LEFT OUTER JOIN ratings AS r ")
 	query.WriteString("ON s.id = r.script_id ")
 	query.WriteString("LEFT OUTER JOIN script_tags AS st ")

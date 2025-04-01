@@ -30,5 +30,4 @@ func InitGorm() error {
 	GormDB = database
 
 	return err
-
 }

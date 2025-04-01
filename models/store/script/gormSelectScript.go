@@ -8,6 +8,7 @@ import (
 
 type GormScript struct {
 	Id        int    `json:"id"`
+	IconCode  string `json:"iconCode"`
 	Directory string `json:"directory"`
 	Filename  string `json:"filename"`
 	Name      string `json:"name"`
@@ -21,6 +22,7 @@ func GormSelectScript(id int) (GormScript, error) {
 	var query strings.Builder
 
 	query.WriteString("SELECT s.id, ")
+	query.WriteString("       i.code AS 'icon_code', ")
 	query.WriteString("       i.directory, ")
 	query.WriteString("       i.filename, ")
 	query.WriteString("       s.name, ")
@@ -30,7 +32,7 @@ func GormSelectScript(id int) (GormScript, error) {
 	query.WriteString("       s.download ")
 	query.WriteString("FROM scripts AS s ")
 	query.WriteString("LEFT OUTER JOIN icons AS i ")
-	query.WriteString("ON s.icon_id = i.id ")
+	query.WriteString("ON s.icon_code = i.code ")
 	query.WriteString("WHERE s.id = ? ")
 
 	//fmt.Println("store.script.gormSelectScript - query: ", query.String())

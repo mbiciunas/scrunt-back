@@ -6,7 +6,7 @@ import (
 
 type Service struct {
 	Id              uint             `json:"id" gorm:"primarykey"`
-	IconId          uint             `json:"icon_id"`
+	IconCode        string           `json:"icon_code"`
 	Name            string           `json:"name"`
 	Desc            string           `json:"desc"`
 	Address         string           `json:"address"`
@@ -32,10 +32,12 @@ type ScriptServiceType struct {
 
 type Script struct {
 	Id                 uint                `json:"id" gorm:"primarykey"`
-	IconId             uint                `json:"icon_id"`
 	Name               string              `json:"name"`
+	IconCode           string              `json:"icon_code"`
 	DescShort          string              `json:"desc_short"`
 	DescLong           string              `json:"desc_long"`
+	ParentMarket       string              `json:"parent_market"`
+	ParentLocal        string              `json:"parent_local"`
 	Created            time.Time           `json:"created"`
 	ScriptServiceTypes []ScriptServiceType `gorm:"foreignkey:ScriptId"`
 	Versions           []Version           `gorm:"foreignkey:ScriptId"`
@@ -102,10 +104,8 @@ type ScriptTag struct {
 }
 
 type Icon struct {
-	Id        uint    `json:"id" gorm:"primarykey"`
-	Code      string  `json:"code"`
-	Directory string  `json:"directory"`
-	Filename  string  `json:"filename"`
-	Service   Service `gorm:"foreignkey:IconId"`
-	Script    Script  `gorm:"foreignkey:IconId"`
+	Id        uint   `json:"id" gorm:"primarykey"`
+	Code      string `json:"code" gorm:"uniqueIndex;not null"`
+	Directory string `json:"directory"`
+	Filename  string `json:"filename"`
 }

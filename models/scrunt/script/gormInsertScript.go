@@ -6,10 +6,10 @@ import (
 	"time"
 )
 
-func GormInsertScript(iconId uint, name string, descShort string, descLong string, created time.Time) (uint, error) {
+func GormInsertScript(name string, iconCode string, descShort string, descLong string, created time.Time) (uint, error) {
 	script := models.Script{
-		IconId:    iconId,
 		Name:      name,
+		IconCode:  iconCode,
 		DescShort: descShort,
 		DescLong:  descLong,
 		Created:   created,

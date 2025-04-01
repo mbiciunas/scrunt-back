@@ -27,7 +27,7 @@ func GormSelectServicesForVersion(id int) ([]GormService, error) {
 	query.WriteString("       i.filename ")
 	query.WriteString("FROM services AS s ")
 	query.WriteString("INNER JOIN icons AS i ")
-	query.WriteString("ON s.icon_id = i.id ")
+	query.WriteString("ON s.icon_code = i.code ")
 	query.WriteString("INNER JOIN version_services AS vs ")
 	query.WriteString("ON s.id = vs.service_id ")
 	query.WriteString("WHERE vs.version_id = ? ")
