@@ -9,25 +9,20 @@ import (
 )
 
 type Data struct {
-	Name        string `json:"Name" binding:"required"`
-	Description string `json:"Description"`
-	Code        string `json:"Code" binding:"required"`
+	Id        uint   `form:"id" json:"id" binding:"required"`
+	Name      string `form:"name" json:"name" binding:"required"`
+	IconCode  string `form:"icon" json:"icon_code" binding:"required"`
+	DescShort string `form:"desc_short" json:"desc_short" binding:"required"`
+	DescLong  string `form:"desc_long" json:"desc_long" binding:"required"`
 }
 
 func PutScript(c *gin.Context) {
 	var json Data
 
-	//jsonData, err := ioutil.ReadAll(c.Request.Body)
-	//if err != nil {
-	//	// Handle error
-	//}
-	//fmt.Println("jsonData: ", string(jsonData))
-	//
-	////id := c.Params.ByName("id")
-	//fmt.Println("ByName(\"Name\"): ", c.Params.ByName("Name"))
-	//fmt.Println("ByName(\"Description\"): ", c.Params.ByName("Description"))
-	//fmt.Println("ByName(\"Code\"): ", c.Params.ByName("Code"))
-	id, err := strconv.Atoi(c.Params.ByName("id"))
+	fmt.Println("api.scrunt.script.PutScript", "Start: ")
+	fmt.Println("api.scrunt.script.PutScript", "Id: ", c.Params.ByName("scriptId"))
+
+	id, err := strconv.Atoi(c.Params.ByName("scriptId"))
 	if err != nil || id < 1 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err})
 		return
@@ -35,11 +30,13 @@ func PutScript(c *gin.Context) {
 	fmt.Println("Id: ", id)
 
 	if err := c.ShouldBindJSON(&json); err == nil {
+		fmt.Println("Id: ", json.Id)
 		fmt.Println("Name: ", json.Name)
-		fmt.Println("Description: ", json.Description)
-		fmt.Println("Code: ", json.Code)
+		fmt.Println("IconCode: ", json.IconCode)
+		fmt.Println("DescShort: ", json.DescShort)
+		fmt.Println("DescLong: ", json.DescLong)
 
-		rows, err := script.UpdateScript(id, json.Name, json.Description, json.Code)
+		rows, err := script.GormUpdateScript(json.Id, json.Name, json.IconCode, json.DescShort, json.DescLong)
 		if err != nil || rows != 1 {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err})
 			return

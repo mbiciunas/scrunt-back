@@ -42,10 +42,10 @@ func GormSelectScriptsAll() ([]GormScriptAll, error) {
 	query.WriteString("GROUP BY s.id ")
 
 	var output []GormScriptAll
-	errGorm := scrunt.GormDB.Raw(query.String()).Scan(&output)
+	result := scrunt.GormDB.Raw(query.String()).Scan(&output)
 
-	if errGorm.Error != nil {
-		return nil, errGorm.Error
+	if result.Error != nil {
+		return nil, result.Error
 	}
 
 	return output, nil
