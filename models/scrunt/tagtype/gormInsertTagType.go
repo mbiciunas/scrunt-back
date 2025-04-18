@@ -1,12 +1,11 @@
 package tagtype
 
 import (
-	"scrunt-back/models"
 	"scrunt-back/models/scrunt"
 )
 
 func GormInsertTagType(name string, description string) (uint, error) {
-	tagType := models.TagType{
+	tagType := scrunt.TagType{
 		Name: name,
 		Desc: description,
 	}

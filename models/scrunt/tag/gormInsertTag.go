@@ -1,12 +1,11 @@
 package tag
 
 import (
-	"scrunt-back/models"
 	"scrunt-back/models/scrunt"
 )
 
 func GormInsertTag(tagTypeId uint, name string) (uint, error) {
-	tag := models.Tag{
+	tag := scrunt.Tag{
 		TagTypeId: tagTypeId,
 		Name:      name,
 	}

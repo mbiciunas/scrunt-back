@@ -1,17 +1,19 @@
 package script
 
 import (
-	"scrunt-back/models"
 	"scrunt-back/models/scrunt"
 	"time"
 )
 
-func GormInsertScript(name string, iconCode string, descShort string, descLong string, created time.Time) (uint, error) {
-	script := models.Script{
+func GormInsertScript(uuid string, name string, iconCode string, descShort string, descLong string, source uint, parent string, created time.Time) (uint, error) {
+	script := scrunt.Script{
+		Uuid:      uuid,
 		Name:      name,
 		IconCode:  iconCode,
 		DescShort: descShort,
 		DescLong:  descLong,
+		Source:    source,
+		Parent:    parent,
 		Created:   created,
 	}
 

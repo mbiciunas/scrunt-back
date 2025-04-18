@@ -5,7 +5,6 @@ import (
 	"log"
 	"os"
 	"scrunt-back/build/local"
-	"scrunt-back/models"
 	"scrunt-back/models/scrunt"
 )
 
@@ -24,18 +23,18 @@ func main() {
 
 	fmt.Println("Auto-migrate to create the tables")
 	err = scrunt.GormDB.AutoMigrate(
-		&models.Script{},
-		&models.Service{},
-		&models.ServiceType{},
-		&models.ScriptServiceType{},
-		&models.Version{},
-		&models.Code{},
-		&models.VersionCode{},
-		&models.VersionService{},
-		&models.TagType{},
-		&models.Tag{},
-		&models.ScriptTag{},
-		&models.Icon{},
+		&scrunt.Script{},
+		&scrunt.Service{},
+		&scrunt.ServiceType{},
+		&scrunt.ScriptServiceType{},
+		&scrunt.Version{},
+		&scrunt.Code{},
+		&scrunt.VersionCode{},
+		&scrunt.VersionService{},
+		&scrunt.TagType{},
+		&scrunt.Tag{},
+		&scrunt.ScriptTag{},
+		&scrunt.Icon{},
 	)
 
 	if err != nil {

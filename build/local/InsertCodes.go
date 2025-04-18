@@ -2,7 +2,6 @@ package local
 
 import (
 	"fmt"
-	"github.com/google/uuid"
 	"scrunt-back/models/scrunt/code"
 )
 
@@ -14,15 +13,20 @@ var codeIdMain uint
 func InsertCodes() (err error) {
 	fmt.Println("Insert Codes")
 
-	codeIdImport, err = code.GormInsertCode("import", "import libscrunt\\nimport libtest", genCodeUUID("import", "import libscrunt\\nimport libtest"))
-	codeIdParameter, err = code.GormInsertCode("parameter", "ask('name', 'bla', 'bla')", genCodeUUID("parameter", "ask('name', 'bla', 'bla')"))
-	codeIdMain, err = code.GormInsertCode("main", "This is some code...", genCodeUUID("main", "This is some code..."))
+	codeIdImport = insertCode("import", "import libscrunt\\nimport libtest")
+	codeIdParameter = insertCode("parameter", "ask('name', 'bla', 'bla')")
+	codeIdMain = insertCode("main", "This is some code...")
 
 	return err
 }
 
-func genCodeUUID(codeType string, value string) string {
-	fmt.Println("genCodeUUID", codeType, value)
+func insertCode(codeType string, value string) uint {
+	uuid := code.GenerateCodeUUID(codeType, value)
+	codeId, err := code.GormInsertCode(uuid, codeType, value)
 
-	return uuid.NewSHA1(uuid.NameSpaceURL, []byte(codeType+value)).String()
+	if err != nil {
+		panic(err)
+	}
+
+	return codeId
 }

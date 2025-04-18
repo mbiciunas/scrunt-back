@@ -1,12 +1,11 @@
 package versioncode
 
 import (
-	"scrunt-back/models"
 	"scrunt-back/models/scrunt"
 )
 
 func GormInsertVersionCode(versionId uint, codeId uint, order uint) (uint, error) {
-	versionCode := models.VersionCode{
+	versionCode := scrunt.VersionCode{
 		VersionId: versionId,
 		CodeId:    codeId,
 		SortOrder: order,

@@ -7,16 +7,16 @@ import (
 )
 
 type GormScriptAll struct {
-	Id           int
-	Directory    string
-	Filename     string
-	Name         string
-	DescShort    string
-	DescLong     string
-	ParentMarket string
-	ParentLocal  string
-	Created      string
-	Tag          string
+	Id        int
+	Directory string
+	Filename  string
+	Name      string
+	DescShort string
+	DescLong  string
+	Source    uint
+	Parent    string
+	Created   string
+	Tag       string
 }
 
 func GormSelectScriptsAll() ([]GormScriptAll, error) {
@@ -28,8 +28,8 @@ func GormSelectScriptsAll() ([]GormScriptAll, error) {
 	query.WriteString("       s.name, ")
 	query.WriteString("       s.desc_short, ")
 	query.WriteString("       s.desc_long, ")
-	query.WriteString("       s.parent_market, ")
-	query.WriteString("       s.parent_local, ")
+	query.WriteString("       s.source, ")
+	query.WriteString("       s.parent, ")
 	query.WriteString("       s.created, ")
 	query.WriteString("       (SELECT GROUP_CONCAT(t2.name) ")
 	query.WriteString("        FROM tags AS t2")

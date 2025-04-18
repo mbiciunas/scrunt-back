@@ -1,13 +1,12 @@
 package code
 
 import (
-	"scrunt-back/models"
 	"scrunt-back/models/scrunt"
 )
 
-func GormInsertCode(codetype string, value string, uuid string) (uint, error) {
-	code := models.Code{
-		Type:  codetype,
+func GormInsertCode(uuid string, codeType string, value string) (uint, error) {
+	code := scrunt.Code{
+		Type:  codeType,
 		Value: value,
 		Uuid:  uuid,
 	}

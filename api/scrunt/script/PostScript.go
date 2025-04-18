@@ -9,22 +9,22 @@ import (
 )
 
 type data struct {
-	Name      string `form:"name" json:"name" binding:"required"`
-	IconCode  string `form:"icon" json:"icon_code" binding:"required"`
-	DescShort string `form:"desc_short" json:"desc_short" binding:"required"`
-	DescLong  string `form:"desc_long" json:"desc_long" binding:"required"`
+	Name      string `json:"name" binding:"required"`
+	IconCode  string `json:"icon_code" binding:"required"`
+	DescShort string `json:"desc_short" binding:"required"`
+	DescLong  string `json:"desc_long" binding:"required"`
+	Source    uint   `json:"source" binding:"required"`
+	Parent    string `json:"parent"`
 }
 
 func PostScript(c *gin.Context) {
 	var json data
-	//fmt.Println(c.)
-	if err := c.ShouldBindJSON(&json); err == nil {
-		fmt.Println("Name: ", json.Name)
-		fmt.Println("Icon: ", json.IconCode)
-		fmt.Println("Desc Short: ", json.DescShort)
-		fmt.Println("Desc Long: ", json.DescLong)
 
-		id, err := script.GormInsertScript(json.Name, json.IconCode, json.DescShort, json.DescLong, time.Now())
+	if err := c.ShouldBindJSON(&json); err == nil {
+		created := time.Now()
+		uuid := script.GenerateScriptUUID(json.Name, created)
+
+		id, err := script.GormInsertScript(uuid, json.Name, json.IconCode, json.DescShort, json.DescLong, json.Source, json.Parent, created)
 		if err != nil || id <= 0 {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err})
 			return

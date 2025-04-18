@@ -1,12 +1,11 @@
 package scripttag
 
 import (
-	"scrunt-back/models"
 	"scrunt-back/models/scrunt"
 )
 
 func GormInsertScriptTag(scriptId uint, tagId uint) (uint, error) {
-	scriptTag := models.ScriptTag{
+	scriptTag := scrunt.ScriptTag{
 		ScriptId: scriptId,
 		TagId:    tagId,
 	}

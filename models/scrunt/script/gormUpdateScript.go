@@ -2,12 +2,11 @@ package script
 
 import (
 	_ "github.com/mattn/go-sqlite3"
-	"scrunt-back/models"
 	"scrunt-back/models/scrunt"
 )
 
 func GormUpdateScript(id uint, name string, iconCode string, descShort string, descLong string) (int64, error) {
-	script := models.Script{
+	script := scrunt.Script{
 		Id:        id,
 		Name:      name,
 		IconCode:  iconCode,

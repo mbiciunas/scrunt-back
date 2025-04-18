@@ -8,19 +8,6 @@ import (
 )
 
 func GormDeleteScript(tx *gorm.DB, id int) (int64, error) {
-	//tx := scrunt.GormDB.Begin()
-	//
-	//defer func() {
-	//	if r := recover(); r != nil {
-	//		tx.Rollback()
-	//	}
-	//}()
-	//
-	//if err := tx.Error; err != nil {
-	//	fmt.Println("models.scrunt.script.gormDeleteScript", "transaction error", err, tx.Error)
-	//	return 0, err
-	//}
-
 	rows, err := deleteScript1(tx, id)
 	if err != nil {
 		tx.Rollback()
@@ -31,11 +18,6 @@ func GormDeleteScript(tx *gorm.DB, id int) (int64, error) {
 			return rows, errors.New("no rows deleted")
 		}
 	}
-
-	//tx.Commit()
-	//if tx.Error != nil {
-	//	return 0, tx.Error
-	//}
 
 	return rows, nil
 }

@@ -2,7 +2,6 @@ package version
 
 import (
 	"github.com/google/uuid"
-	"scrunt-back/models"
 	"scrunt-back/models/scrunt"
 	"strconv"
 	"time"
@@ -11,7 +10,7 @@ import (
 func GormInsertVersion(scriptId uint, time time.Time, major int, minor int, patch int, save int, change string) (uint, error) {
 	uuidVersion := genUUID(scriptId, major, minor, patch, save, change)
 
-	version := models.Version{
+	version := scrunt.Version{
 		ScriptId: scriptId,
 		Created:  time.UTC(),
 		Major:    major,

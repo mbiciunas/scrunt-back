@@ -1,12 +1,11 @@
 package icon
 
 import (
-	"scrunt-back/models"
 	"scrunt-back/models/scrunt"
 )
 
 func GormInsertIcon(code string, directory string, filename string) (uint, error) {
-	icon := models.Icon{
+	icon := scrunt.Icon{
 		Code:      code,
 		Directory: directory,
 		Filename:  filename,

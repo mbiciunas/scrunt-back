@@ -1,4 +1,4 @@
-package models
+package scrunt
 
 import (
 	"time"
@@ -32,12 +32,13 @@ type ScriptServiceType struct {
 
 type Script struct {
 	Id                 uint                `json:"id" gorm:"primarykey"`
+	Uuid               string              `json:"uuid"`
 	Name               string              `json:"name"`
 	IconCode           string              `json:"icon_code"`
 	DescShort          string              `json:"desc_short"`
 	DescLong           string              `json:"desc_long"`
-	ParentMarket       string              `json:"parent_market"`
-	ParentLocal        string              `json:"parent_local"`
+	Source             uint                `json:"source"`
+	Parent             string              `json:"parent"`
 	Created            time.Time           `json:"created"`
 	ScriptServiceTypes []ScriptServiceType `gorm:"foreignkey:ScriptId"`
 	Versions           []Version           `gorm:"foreignkey:ScriptId"`
@@ -46,13 +47,13 @@ type Script struct {
 
 type Version struct {
 	Id              uint             `json:"id" gorm:"primarykey"`
+	Uuid            string           `json:"uuid"`
 	ScriptId        uint             `json:"script_id"`
 	Created         time.Time        `json:"service_type_id"`
 	Major           int              `json:"major"`
 	Minor           int              `json:"minor"`
 	Patch           int              `json:"patch"`
 	Save            int              `json:"save"`
-	Uuid            string           `json:"uuid"`
 	Change          string           `json:"change"`
 	VersionCodes    []VersionCode    `gorm:"foreignkey:VersionId"`
 	VersionServices []VersionService `gorm:"foreignkey:VersionId"`
@@ -60,9 +61,9 @@ type Version struct {
 
 type Code struct {
 	Id           uint          `json:"id" gorm:"primarykey"`
+	Uuid         string        `json:"uuid"`
 	Type         string        `json:"type"`
 	Value        string        `json:"value"`
-	Uuid         string        `json:"uuid"`
 	VersionCodes []VersionCode `gorm:"foreignkey:CodeId"`
 }
 
