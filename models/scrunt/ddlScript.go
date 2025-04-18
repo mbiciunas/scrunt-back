@@ -50,10 +50,10 @@ type Version struct {
 	Uuid            string           `json:"uuid"`
 	ScriptId        uint             `json:"script_id"`
 	Created         time.Time        `json:"service_type_id"`
-	Major           int              `json:"major"`
-	Minor           int              `json:"minor"`
-	Patch           int              `json:"patch"`
-	Save            int              `json:"save"`
+	Major           uint             `json:"major"`
+	Minor           uint             `json:"minor"`
+	Patch           uint             `json:"patch"`
+	Save            uint             `json:"save"`
 	Change          string           `json:"change"`
 	VersionCodes    []VersionCode    `gorm:"foreignkey:VersionId"`
 	VersionServices []VersionService `gorm:"foreignkey:VersionId"`
