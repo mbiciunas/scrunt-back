@@ -8,21 +8,23 @@ import (
 )
 
 type GormScriptAll struct {
-	Id        int
-	Directory string
-	Filename  string
-	Name      string
-	DescShort string
-	DescLong  string
-	Created   string
-	Rating    float32
-	Tag       string
+	Id        int     `json:"id"`
+	Uuid      string  `json:"uuid"`
+	Directory string  `json:"directory"`
+	Filename  string  `json:"filename"`
+	Name      string  `json:"name"`
+	DescShort string  `json:"desc_short"`
+	DescLong  string  `json:"desc_long"`
+	Created   string  `json:"created"`
+	Rating    float32 `json:"rating"`
+	Tag       string  `json:"tag"`
 }
 
 func GormSelectScriptsAll() ([]GormScriptAll, error) {
 	var query strings.Builder
 
 	query.WriteString("SELECT s.id, ")
+	query.WriteString("       BIN_TO_UUID(s.uuid) AS uuid, ")
 	query.WriteString("       i.directory, ")
 	query.WriteString("       i.filename, ")
 	query.WriteString("       s.name, ")
@@ -47,8 +49,6 @@ func GormSelectScriptsAll() ([]GormScriptAll, error) {
 	query.WriteString("WHERE t.name LIKE \"%\" ")
 	query.WriteString("GROUP BY s.id ")
 
-	//fmt.Println(">>>", query.String(), "<<<")
-
 	var output []GormScriptAll
 	errGorm := store.GormDB.Raw(query.String()).Scan(&output)
 
@@ -56,8 +56,6 @@ func GormSelectScriptsAll() ([]GormScriptAll, error) {
 		fmt.Println("GORM ERROR Raw: ", errGorm)
 		return nil, errGorm.Error
 	}
-
-	//fmt.Println("GORM selectScriptsAll", output)
 
 	return output, nil
 }

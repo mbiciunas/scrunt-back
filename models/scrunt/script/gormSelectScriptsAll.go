@@ -8,6 +8,7 @@ import (
 
 type GormScriptAll struct {
 	Id        int
+	Uuid      string
 	Directory string
 	Filename  string
 	Name      string
@@ -23,6 +24,7 @@ func GormSelectScriptsAll() ([]GormScriptAll, error) {
 	var query strings.Builder
 
 	query.WriteString("SELECT s.id, ")
+	query.WriteString("       s.uuid, ")
 	query.WriteString("       i.directory, ")
 	query.WriteString("       i.filename, ")
 	query.WriteString("       s.name, ")

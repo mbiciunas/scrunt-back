@@ -8,11 +8,11 @@ import (
 )
 
 type data struct {
-	Name        string `form:"name" json:"name" binding:"required"`
-	Description string `form:"description" json:"description" binding:"required"`
-	Address     string `form:"address" json:"address" binding:"required"`
-	Port        uint   `form:"port" json:"port" binding:"required"`
-	ServiceType uint   `form:"servicetype" json:"servicetype" binding:"required"`
+	Name        string `json:"name" binding:"required"`
+	Description string `json:"description" binding:"required"`
+	Address     string `json:"address" binding:"required"`
+	Port        uint   `json:"port" binding:"required"`
+	ServiceType uint   `json:"servicetype" binding:"required"`
 }
 
 func PostService(c *gin.Context) {

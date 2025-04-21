@@ -4,6 +4,14 @@ import (
 	"time"
 )
 
+type ScriptSource int
+
+const ScriptSourceIndependent ScriptSource = 1
+const ScriptSourceStoreInstance ScriptSource = 2
+const ScriptSourceStoreCopy ScriptSource = 3
+const ScriptSourceLibraryInstance ScriptSource = 4
+const ScriptSourceLibraryCopy ScriptSource = 5
+
 type Service struct {
 	Id              uint             `json:"id" gorm:"primarykey"`
 	IconCode        string           `json:"icon_code"`
@@ -37,7 +45,7 @@ type Script struct {
 	IconCode           string              `json:"icon_code"`
 	DescShort          string              `json:"desc_short"`
 	DescLong           string              `json:"desc_long"`
-	Source             uint                `json:"source"`
+	Source             ScriptSource        `json:"source"`
 	Parent             string              `json:"parent"`
 	Created            time.Time           `json:"created"`
 	ScriptServiceTypes []ScriptServiceType `gorm:"foreignkey:ScriptId"`

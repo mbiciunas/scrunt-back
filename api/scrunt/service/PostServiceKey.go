@@ -8,8 +8,8 @@ import (
 )
 
 type dataServiceKey struct {
-	KeyId     uint `form:"keyid" json:"keyid" binding:"required"`
-	ServiceId uint `form:"serviceid" json:"serviceid" binding:"required"`
+	KeyId     uint `json:"keyid" binding:"required"`
+	ServiceId uint `json:"serviceid" binding:"required"`
 }
 
 func PostServiceKey(c *gin.Context) {

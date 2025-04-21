@@ -8,6 +8,7 @@ import (
 
 type GormScript struct {
 	Id        int    `json:"id"`
+	Uuid      string `json:"uuid"`
 	IconCode  string `json:"iconCode"`
 	Directory string `json:"directory"`
 	Filename  string `json:"filename"`
@@ -22,6 +23,7 @@ func GormSelectScript(id int) (GormScript, error) {
 	var query strings.Builder
 
 	query.WriteString("SELECT s.id, ")
+	query.WriteString("       BIN_TO_UUID(s.uuid) AS uuid, ")
 	query.WriteString("       i.code AS 'icon_code', ")
 	query.WriteString("       i.directory, ")
 	query.WriteString("       i.filename, ")
@@ -35,8 +37,6 @@ func GormSelectScript(id int) (GormScript, error) {
 	query.WriteString("ON s.icon_code = i.code ")
 	query.WriteString("WHERE s.id = ? ")
 
-	//fmt.Println("store.script.gormSelectScript - query: ", query.String())
-
 	var output GormScript
 
 	errGorm := store.GormDB.Raw(query.String(), id).Scan(&output)
@@ -45,8 +45,6 @@ func GormSelectScript(id int) (GormScript, error) {
 		fmt.Println("store.script.gormSelectScript - errGorm: ", errGorm)
 		return output, errGorm.Error
 	}
-
-	//fmt.Println("store.script.gormSelectScript - output: ", output)
 
 	return output, nil
 }

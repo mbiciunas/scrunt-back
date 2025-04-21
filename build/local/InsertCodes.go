@@ -5,7 +5,6 @@ import (
 	"scrunt-back/models/scrunt/code"
 )
 
-// ScriptTags
 var codeIdImport uint
 var codeIdParameter uint
 var codeIdMain uint
@@ -13,7 +12,7 @@ var codeIdMain uint
 func InsertCodes() (err error) {
 	fmt.Println("Insert Codes")
 
-	codeIdImport = insertCode("import", "import libscrunt\\nimport libtest")
+	codeIdImport = insertCode("import", "import libscrunt\\import libtest")
 	codeIdParameter = insertCode("parameter", "ask('name', 'bla', 'bla')")
 	codeIdMain = insertCode("main", "This is some code...")
 

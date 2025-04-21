@@ -4,17 +4,18 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"scrunt-back/models/scrunt"
 	"scrunt-back/models/scrunt/script"
 	"time"
 )
 
 type data struct {
-	Name      string `json:"name" binding:"required"`
-	IconCode  string `json:"icon_code" binding:"required"`
-	DescShort string `json:"desc_short" binding:"required"`
-	DescLong  string `json:"desc_long" binding:"required"`
-	Source    uint   `json:"source" binding:"required"`
-	Parent    string `json:"parent"`
+	Name      string              `json:"name" binding:"required"`
+	IconCode  string              `json:"icon_code" binding:"required"`
+	DescShort string              `json:"desc_short" binding:"required"`
+	DescLong  string              `json:"desc_long" binding:"required"`
+	Source    scrunt.ScriptSource `json:"source" binding:"required"`
+	Parent    string              `json:"parent"`
 }
 
 func PostScript(c *gin.Context) {

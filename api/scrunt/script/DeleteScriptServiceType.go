@@ -10,8 +10,6 @@ import (
 
 func DeleteScriptServiceType(c *gin.Context) {
 	scriptServiceTypeId, err := strconv.Atoi(c.Param("scriptservicetypeid"))
-	//serviceKeyId, err := strconv.Atoi(c.Param("servicekeyid"))
-	//fmt.Println("serviceId", serviceId)
 	fmt.Println("scriptServiceTypeId", scriptServiceTypeId)
 	if err != nil || scriptServiceTypeId < 1 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err})

@@ -17,7 +17,7 @@ func extractTarGz(path string, gzipStream io.Reader) {
 
 	tarReader := tar.NewReader(uncompressedStream)
 
-	for true {
+	for {
 		header, err := tarReader.Next()
 
 		if err == io.EOF {

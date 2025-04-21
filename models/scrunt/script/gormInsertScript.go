@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-func GormInsertScript(uuid string, name string, iconCode string, descShort string, descLong string, source uint, parent string, created time.Time) (uint, error) {
+func GormInsertScript(uuid string, name string, iconCode string, descShort string, descLong string, source scrunt.ScriptSource, parent string, created time.Time) (uint, error) {
 	script := scrunt.Script{
 		Uuid:      uuid,
 		Name:      name,

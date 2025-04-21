@@ -6,13 +6,13 @@ import (
 	"scrunt-back/models/scrunt"
 )
 
-func InsertCredential(name string, credtype string, credential string) (int64, error) {
+func InsertCredential(name string, credType string, credential string) (int64, error) {
 	statement, err := scrunt.Db.Prepare(`INSERT INTO credentials (name, type, credential) VALUES (?, ?, ?)`)
 	if err != nil {
 		return 0, err
 	}
 
-	result, err := statement.Exec(name, credtype, credential)
+	result, err := statement.Exec(name, credType, credential)
 	if err != nil {
 		return 0, err
 	} else {

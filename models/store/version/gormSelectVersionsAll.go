@@ -33,8 +33,6 @@ func GormSelectVersionsAll(scriptId int) ([]GormVersionAll, error) {
 	query.WriteString("WHERE v.script_id = ? ")
 	query.WriteString("ORDER BY v.created DESC ")
 
-	//fmt.Println(">>>", query.String(), "<<<")
-
 	var output []GormVersionAll
 
 	errGorm := store.GormDB.Raw(query.String(), scriptId).Scan(&output)
