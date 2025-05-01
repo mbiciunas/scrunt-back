@@ -5,11 +5,11 @@ import (
 	"time"
 )
 
-func GormInsertVersion(uuid string, scriptId uint, time time.Time, major uint, minor uint, patch uint, save uint, change string) (uint, error) {
+func GormInsertVersion(uuid string, scriptId uint, created time.Time, major uint, minor uint, patch uint, save uint, change string) (uint, error) {
 	version := scrunt.Version{
 		Uuid:     uuid,
 		ScriptId: scriptId,
-		Created:  time.UTC(),
+		Created:  created.UTC(),
 		Major:    major,
 		Minor:    minor,
 		Patch:    patch,

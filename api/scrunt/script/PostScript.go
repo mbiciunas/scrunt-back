@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"scrunt-back/models/scrunt"
 	"scrunt-back/models/scrunt/script"
+	"scrunt-back/models/scrunt/version"
 	"time"
 )
 
@@ -20,12 +21,25 @@ type data struct {
 
 func PostScript(c *gin.Context) {
 	var json data
+	created := time.Now()
+	major := uint(0)
+	minor := uint(0)
+	patch := uint(0)
+	save := uint(0)
+	change := "New Script"
 
 	if err := c.ShouldBindJSON(&json); err == nil {
-		created := time.Now()
-		uuid := script.GenerateScriptUUID(json.Name, created)
+		uuidScript := script.GenerateScriptUUID(json.Name, created)
 
-		id, err := script.GormInsertScript(uuid, json.Name, json.IconCode, json.DescShort, json.DescLong, json.Source, json.Parent, created)
+		scriptId, err := script.GormInsertScript(uuidScript, json.Name, json.IconCode, json.DescShort, json.DescLong, json.Source, json.Parent, created)
+		if err != nil || scriptId <= 0 {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err})
+			return
+		}
+
+		uuidVersion := version.GenerateVersionUUID(scriptId, major, minor, patch, save, change)
+
+		id, err := version.GormInsertVersion(uuidVersion, scriptId, created, major, minor, patch, save, change)
 		if err != nil || id <= 0 {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err})
 			return
