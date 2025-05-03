@@ -16,7 +16,7 @@ type GormVersionAll struct {
 	Patch    int    `json:"patch"`
 	Save     int    `json:"save"`
 	UUID     string `json:"uuid"`
-	Changes  string `json:"changes"`
+	Change   string `json:"change"`
 }
 
 func GormSelectVersionsAll(scriptId int) ([]GormVersionAll, error) {

@@ -15,7 +15,7 @@ type GormVersionAll struct {
 	Minor    int    `json:"minor"`
 	Patch    int    `json:"patch"`
 	UUID     string `json:"uuid"`
-	Changes  string `json:"changes"`
+	Change   string `json:"change"`
 }
 
 func GormSelectVersionsAll(scriptId int) ([]GormVersionAll, error) {
@@ -28,7 +28,7 @@ func GormSelectVersionsAll(scriptId int) ([]GormVersionAll, error) {
 	query.WriteString("       v.minor, ")
 	query.WriteString("       v.patch, ")
 	query.WriteString("       BIN_TO_UUID(v.uuid) AS uuid, ")
-	query.WriteString("       v.changes ")
+	query.WriteString("       v.change ")
 	query.WriteString("FROM versions AS v ")
 	query.WriteString("WHERE v.script_id = ? ")
 	query.WriteString("ORDER BY v.created DESC ")
