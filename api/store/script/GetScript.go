@@ -1,13 +1,14 @@
 package script
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"net/http"
 	"scrunt-back/models/store/rating"
 	"scrunt-back/models/store/script"
 	"scrunt-back/models/store/service"
 	"scrunt-back/models/store/version"
-	"strconv"
 )
 
 type payload struct {
@@ -19,20 +20,22 @@ type payload struct {
 
 func GetScript(c *gin.Context) {
 	payload := payload{}
+	var err error
 
-	scriptId, err := strconv.Atoi(c.Param("scriptId"))
-	if err != nil || scriptId < 1 {
+	scriptUUID := c.Param("scriptUUID")
+	if err := uuid.Validate(scriptUUID); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err})
 		return
 	}
+	fmt.Println("GetScript - uuid", scriptUUID)
 
-	payload.Script, err = script.GormSelectScript(scriptId)
+	payload.Script, err = script.GormSelectScript(scriptUUID)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err})
 		return
 	}
 
-	payload.Version, err = version.GormSelectVersionNewest(scriptId)
+	payload.Version, err = version.GormSelectVersionNewest(payload.Script.Id)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err})
 		return
@@ -50,7 +53,7 @@ func GetScript(c *gin.Context) {
 		}
 	}
 
-	scriptRatings, err := rating.GormSelectRatingSummary(scriptId)
+	scriptRatings, err := rating.GormSelectRatingSummary(payload.Script.Id)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err})
 		return

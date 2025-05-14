@@ -18,7 +18,7 @@ type GormVersionAll struct {
 	Change   string `json:"change"`
 }
 
-func GormSelectVersionsAll(scriptId int) ([]GormVersionAll, error) {
+func GormSelectVersionsAll(scriptUUID string) ([]GormVersionAll, error) {
 	var query strings.Builder
 
 	query.WriteString("SELECT v.id, ")
@@ -29,13 +29,15 @@ func GormSelectVersionsAll(scriptId int) ([]GormVersionAll, error) {
 	query.WriteString("       v.patch, ")
 	query.WriteString("       BIN_TO_UUID(v.uuid) AS uuid, ")
 	query.WriteString("       v.change ")
-	query.WriteString("FROM versions AS v ")
-	query.WriteString("WHERE v.script_id = ? ")
+	query.WriteString("FROM scripts AS s ")
+	query.WriteString("INNER JOIN versions AS v ")
+	query.WriteString("ON s.id = v.script_id ")
+	query.WriteString("WHERE s.uuid = UUID_TO_BIN(?) ")
 	query.WriteString("ORDER BY v.created DESC ")
 
 	var output []GormVersionAll
 
-	errGorm := store.GormDB.Raw(query.String(), scriptId).Scan(&output)
+	errGorm := store.GormDB.Raw(query.String(), scriptUUID).Scan(&output)
 
 	if errGorm.Error != nil {
 		fmt.Println("GORM ERROR Raw: ", errGorm)

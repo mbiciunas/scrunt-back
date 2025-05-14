@@ -15,7 +15,7 @@ type GormCode struct {
 	Value string `json:"value"`
 }
 
-func GormSelectCodeForVersion(scriptId int, versionId int) ([]GormCode, error) {
+func GormSelectCodeForVersion(scriptUUID string, versionId int) ([]GormCode, error) {
 	var query strings.Builder
 
 	query.WriteString("SELECT c.id, ")
@@ -23,12 +23,14 @@ func GormSelectCodeForVersion(scriptId int, versionId int) ([]GormCode, error) {
 	query.WriteString("       c.type, ")
 	query.WriteString("       vc.order, ")
 	query.WriteString("       c.value ")
-	query.WriteString("FROM versions AS v ")
+	query.WriteString("FROM scripts AS s ")
+	query.WriteString("INNER JOIN versions AS v ")
+	query.WriteString("ON s.id = v.script_id ")
 	query.WriteString("INNER JOIN version_codes AS vc ")
 	query.WriteString("ON v.id = vc.version_id ")
 	query.WriteString("INNER JOIN codes AS c ")
 	query.WriteString("ON vc.code_id = c.id ")
-	query.WriteString("WHERE v.script_id = ? ")
+	query.WriteString("WHERE s.UUID = UUID_TO_BIN(?) ")
 	query.WriteString("AND v.id = ? ")
 	query.WriteString("ORDER BY vc.order ")
 
@@ -36,7 +38,7 @@ func GormSelectCodeForVersion(scriptId int, versionId int) ([]GormCode, error) {
 
 	var output []GormCode
 
-	errGorm := store.GormDB.Raw(query.String(), scriptId, versionId).Scan(&output)
+	errGorm := store.GormDB.Raw(query.String(), scriptUUID, versionId).Scan(&output)
 
 	if errGorm.Error != nil {
 		fmt.Println("GormSelectCodeForVersion - ERROR Raw: ", errGorm)

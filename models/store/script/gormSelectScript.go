@@ -19,7 +19,7 @@ type GormScript struct {
 	Download  int    `json:"download"`
 }
 
-func GormSelectScript(id int) (GormScript, error) {
+func GormSelectScript(scriptUUID string) (GormScript, error) {
 	var query strings.Builder
 
 	query.WriteString("SELECT s.id, ")
@@ -35,11 +35,11 @@ func GormSelectScript(id int) (GormScript, error) {
 	query.WriteString("FROM scripts AS s ")
 	query.WriteString("LEFT OUTER JOIN icons AS i ")
 	query.WriteString("ON s.icon_code = i.code ")
-	query.WriteString("WHERE s.id = ? ")
+	query.WriteString("WHERE s.uuid = UUID_TO_BIN(?) ")
 
 	var output GormScript
 
-	errGorm := store.GormDB.Raw(query.String(), id).Scan(&output)
+	errGorm := store.GormDB.Raw(query.String(), scriptUUID).Scan(&output)
 
 	if errGorm.Error != nil {
 		fmt.Println("store.script.gormSelectScript - errGorm: ", errGorm)

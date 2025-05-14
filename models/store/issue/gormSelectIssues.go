@@ -18,7 +18,7 @@ type GormIssue struct {
 	Comments    int    `json:"comments"`
 }
 
-func GormSelectIssues(scriptId int) ([]GormIssue, error) {
+func GormSelectIssues(scriptUUID string) ([]GormIssue, error) {
 	var query strings.Builder
 
 	query.WriteString("SELECT i.id, ")
@@ -29,19 +29,21 @@ func GormSelectIssues(scriptId int) ([]GormIssue, error) {
 	query.WriteString("       i.status, ")
 	query.WriteString("       u.alias, ")
 	query.WriteString("	     count(ic.id) AS 'comments' ")
-	query.WriteString("FROM issues AS i ")
+	query.WriteString("FROM scripts AS s ")
+	query.WriteString("INNER JOIN issues AS i ")
+	query.WriteString("ON s.id = i.script_id ")
 	query.WriteString("INNER JOIN users AS u ")
 	query.WriteString("ON i.user_id = u.id ")
 	query.WriteString("LEFT OUTER JOIN issue_comments AS ic ")
 	query.WriteString("ON i.id = ic.issue_id ")
-	query.WriteString("WHERE i.script_id = ? ")
+	query.WriteString("WHERE s.uuid = UUID_TO_BIN(?) ")
 	query.WriteString("GROUP BY i.id ")
 
 	fmt.Println("GormSelectIssues - query", query.String())
 
 	var output []GormIssue
 
-	errGorm := store.GormDB.Raw(query.String(), scriptId).Scan(&output)
+	errGorm := store.GormDB.Raw(query.String(), scriptUUID).Scan(&output)
 
 	if errGorm.Error != nil {
 		fmt.Println("GormSelectIssues - ERROR Raw: ", errGorm)

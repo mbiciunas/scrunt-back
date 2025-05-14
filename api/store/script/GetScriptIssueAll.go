@@ -3,19 +3,21 @@ package script
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"net/http"
 	"scrunt-back/models/store/issue"
-	"strconv"
 )
 
 func GetScriptIssueAll(c *gin.Context) {
-	scriptId, err := strconv.Atoi(c.Param("scriptId"))
-	if err != nil || scriptId < 1 {
+	var err error
+
+	scriptUUID := c.Param("scriptUUID")
+	if err := uuid.Validate(scriptUUID); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err})
 		return
 	}
 
-	issues, err := issue.GormSelectIssues(scriptId)
+	issues, err := issue.GormSelectIssues(scriptUUID)
 	fmt.Println("store.issue.GetScriptIssueAll - issues", issues)
 	if err != nil {
 		fmt.Println("store.script.GetScriptIssueAll - err = ", err)
