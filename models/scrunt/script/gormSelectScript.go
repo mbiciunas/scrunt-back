@@ -19,7 +19,7 @@ type GormScript struct {
 	Created   string `json:"created"`
 }
 
-func GormSelectScript(id int) (GormScript, error) {
+func GormSelectScript(scriptUUID string) (GormScript, error) {
 	var query strings.Builder
 
 	query.WriteString("SELECT s.id, ")
@@ -35,11 +35,11 @@ func GormSelectScript(id int) (GormScript, error) {
 	query.WriteString("FROM scripts AS s ")
 	query.WriteString("LEFT OUTER JOIN icons AS i ")
 	query.WriteString("ON s.icon_code = i.code ")
-	query.WriteString("WHERE s.id = ? ")
+	query.WriteString("WHERE s.uuid = ? ")
 
 	var output GormScript
 
-	errGorm := scrunt.GormDB.Raw(query.String(), id).Scan(&output)
+	errGorm := scrunt.GormDB.Raw(query.String(), scriptUUID).Scan(&output)
 
 	fmt.Println("models.scrunt.script.gormSelectScript - output", output)
 

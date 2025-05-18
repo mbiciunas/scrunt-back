@@ -4,19 +4,19 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"net/http"
 	"scrunt-back/models/scrunt/script"
-	"strconv"
 )
 
 func GetScriptService(c *gin.Context) {
-	id, err := strconv.Atoi(c.Param("id"))
-	if err != nil || id < 1 {
+	scriptUUID := c.Param("scriptUUID")
+	if err := uuid.Validate(scriptUUID); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err})
 		return
 	}
 
-	scriptService, err := script.SelectScriptServices(id)
+	scriptService, err := script.SelectScriptServices(scriptUUID)
 	jsonScript, err := json.Marshal(scriptService)
 	fmt.Println(string(jsonScript))
 

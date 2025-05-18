@@ -7,25 +7,27 @@ import (
 	"strings"
 )
 
-func GormSelectVersionNewest(id int) (GormVersionAll, error) {
+func GormSelectVersionNewest(scriptUUID string) (GormVersionAll, error) {
 	var query strings.Builder
 
-	query.WriteString("SELECT id, ")
-	query.WriteString("       script_id, ")
-	query.WriteString("       created, ")
-	query.WriteString("       major, ")
-	query.WriteString("       minor, ")
-	query.WriteString("       patch, ")
-	query.WriteString("       save, ")
-	query.WriteString("       uuid, ")
-	query.WriteString("       change ")
-	query.WriteString("FROM versions ")
-	query.WriteString("WHERE script_id = ? ")
-	query.WriteString("AND created = (SELECT max(created) from versions WHERE script_id = ?) ")
+	query.WriteString("SELECT v.id, ")
+	query.WriteString("       v.script_id, ")
+	query.WriteString("       v.created, ")
+	query.WriteString("       v.major, ")
+	query.WriteString("       v.minor, ")
+	query.WriteString("       v.patch, ")
+	query.WriteString("       v.save, ")
+	query.WriteString("       v.uuid, ")
+	query.WriteString("       v.change ")
+	query.WriteString("FROM scripts AS s ")
+	query.WriteString("INNER JOIN versions AS v ")
+	query.WriteString("ON s.id = v.script_id ")
+	query.WriteString("WHERE s.uuid = ? ")
+	query.WriteString("AND v.created = (SELECT max(v1.created) from versions AS v1 WHERE v1.script_id = s.id) ")
 
 	var output GormVersionAll
 
-	result := scrunt.GormDB.Raw(query.String(), id, id).Scan(&output)
+	result := scrunt.GormDB.Raw(query.String(), scriptUUID).Scan(&output)
 
 	if result.Error != nil {
 		fmt.Println("GORM ERROR Raw: ", result.Error)

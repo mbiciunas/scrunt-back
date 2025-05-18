@@ -2,11 +2,11 @@ package script
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"net/http"
 	"scrunt-back/models/scrunt/script"
 	"scrunt-back/models/scrunt/service"
 	"scrunt-back/models/scrunt/version"
-	"strconv"
 )
 
 type Payload struct {
@@ -17,20 +17,21 @@ type Payload struct {
 
 func GetScript(c *gin.Context) {
 	payload := Payload{}
+	var err error
 
-	scriptId, err := strconv.Atoi(c.Param("scriptId"))
-	if err != nil || scriptId < 1 {
+	scriptUUID := c.Param("scriptUUID")
+	if err := uuid.Validate(scriptUUID); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err})
 		return
 	}
 
-	payload.Script, err = script.GormSelectScript(scriptId)
+	payload.Script, err = script.GormSelectScript(scriptUUID)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err})
 		return
 	}
 
-	scriptVersion, err := version.GormSelectVersionNewest(scriptId)
+	scriptVersion, err := version.GormSelectVersionNewest(scriptUUID)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err})
 		return

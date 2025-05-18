@@ -3,20 +3,19 @@ package script
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"net/http"
 	"scrunt-back/models/scrunt/version"
-	"strconv"
 )
 
 func GetScriptVersionAll(c *gin.Context) {
-	scriptId, err := strconv.Atoi(c.Param("scriptId"))
-	fmt.Println("scrunt.script.GetScriptVersionAll - scriptId = ", scriptId)
-	if err != nil || scriptId < 1 {
+	scriptUUID := c.Param("scriptUUID")
+	if err := uuid.Validate(scriptUUID); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err})
 		return
 	}
 
-	versions, err := version.GormSelectVersionsAll(scriptId)
+	versions, err := version.GormSelectVersionsAll(scriptUUID)
 	fmt.Println("scrunt.script.GetScriptVersionAll - codes", versions)
 	if err != nil {
 		fmt.Println("scrunt.script.GetScriptVersionAll - err = ", err)

@@ -15,7 +15,7 @@ type ScriptService struct {
 
 var scriptServices []ScriptService
 
-func SelectScriptServices(scriptId int) ([]ScriptService, error) {
+func SelectScriptServices(scriptUUID string) ([]ScriptService, error) {
 	scriptServices = nil
 
 	fmt.Println("models.selectScriptServices")
@@ -23,15 +23,17 @@ func SelectScriptServices(scriptId int) ([]ScriptService, error) {
 		`SELECT sst.id,
 			sst.name,
 			sst.service_type_id
-		FROM script_service_types sst
-		WHERE script_id = $1`)
+		FROM scripts AS s
+		INNER JOIN script_service_types AS sst
+		ON s.id = sst.script_id
+		WHERE s.uuid = $1`)
 	if err != nil {
 		fmt.Println("models.selectScriptServices", "Error", err)
 		return nil, err
 	}
 
 	fmt.Println("models.selectScriptServices", "Execute query")
-	rows, err := statement.Query(scriptId)
+	rows, err := statement.Query(scriptUUID)
 	if err != nil {
 		fmt.Println("Query error", err)
 		return nil, err

@@ -129,16 +129,17 @@ func scruntScripts(router *gin.Engine) {
 	{
 		api.GET("/scripts", script.GetAllScript)
 		api.POST("/scripts", script.PostScript)
-		api.GET("/scripts/:scriptId", script.GetScript)
+		api.GET("/scripts/:scriptUUID", script.GetScript)
 		api.PUT("/scripts/:scriptId", script.PutScript)
 		api.DELETE("/scripts/:scriptId", script.DeleteScript)
 		api.POST("/scripts/:scriptId/run", script.PostScriptRun)
-		api.GET("/scripts/:scriptId/services", script.GetScriptService)
+		api.GET("/scripts/:scriptUUID/issues", script.GetScriptIssueAll)
+		api.GET("/scripts/:scriptUUID/services", script.GetScriptService)
 		api.POST("/scripts/:scriptId/services", script.PostScriptServiceType)
 		api.DELETE("/scripts/:scriptId/services/:scriptservicetypeid", script.DeleteScriptServiceType)
 		api.PUT("/scripts/:scriptId/services/:scriptservicetypeid", script.PutScriptServiceType)
-		api.GET("/scripts/:scriptId/versions", script.GetScriptVersionAll)
-		api.GET("/scripts/:scriptId/versions/:versionId/codes", script.GetScriptVersionCode)
+		api.GET("/scripts/:scriptUUID/versions", script.GetScriptVersionAll)
+		api.GET("/scripts/:scriptUUID/versions/:versionId/codes", script.GetScriptVersionCode)
 	}
 }
 
