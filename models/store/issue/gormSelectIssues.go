@@ -8,7 +8,7 @@ import (
 )
 
 type GormIssue struct {
-	Id          int    `json:"id"`
+	UUID        string `json:"uuid"`
 	Date        string `json:"date"`
 	Title       string `json:"title"`
 	Description string `json:"description"`
@@ -21,7 +21,7 @@ type GormIssue struct {
 func GormSelectIssues(scriptUUID string) ([]GormIssue, error) {
 	var query strings.Builder
 
-	query.WriteString("SELECT i.id, ")
+	query.WriteString("SELECT BIN_TO_UUID(i.uuid) AS uuid, ")
 	query.WriteString("       i.date, ")
 	query.WriteString("       i.title, ")
 	query.WriteString("       i.description, ")
