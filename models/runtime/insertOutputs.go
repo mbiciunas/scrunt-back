@@ -2,7 +2,7 @@ package runtime
 
 import (
 	"fmt"
-	_ "github.com/mattn/go-sqlite3"
+	_ "modernc.org/sqlite"
 )
 
 func InsertOutput(runId int, outputType int, value string) (int64, error) {

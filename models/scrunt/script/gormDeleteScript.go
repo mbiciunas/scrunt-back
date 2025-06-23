@@ -2,8 +2,8 @@ package script
 
 import (
 	"errors"
-	_ "github.com/mattn/go-sqlite3"
 	"gorm.io/gorm"
+	_ "modernc.org/sqlite"
 	"strings"
 )
 

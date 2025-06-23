@@ -2,7 +2,7 @@ package servicekey
 
 import (
 	"fmt"
-	_ "github.com/mattn/go-sqlite3"
+	_ "modernc.org/sqlite"
 	"scrunt-back/models/scrunt"
 )
 

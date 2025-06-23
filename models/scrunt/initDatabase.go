@@ -2,16 +2,16 @@ package scrunt
 
 import (
 	"database/sql"
-	_ "github.com/mattn/go-sqlite3"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+	_ "modernc.org/sqlite"
 )
 
 var Db *sql.DB
 var GormDB *gorm.DB
 
 func InitDB() error {
-	database, err := sql.Open("sqlite3", ".scrunt/database/scrunt.db")
+	database, err := sql.Open("sqlite", ".scrunt/database/scrunt.db")
 	if err != nil {
 		return err
 	}
