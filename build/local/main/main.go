@@ -26,7 +26,6 @@ func main() {
 		&scrunt.Script{},
 		&scrunt.Service{},
 		&scrunt.ServiceType{},
-		&scrunt.ScriptServiceType{},
 		&scrunt.Version{},
 		&scrunt.Code{},
 		&scrunt.VersionCode{},
@@ -62,6 +61,11 @@ func main() {
 	}
 
 	err = local.InsertScriptTags()
+	if err != nil {
+		return
+	}
+
+	err = local.InsertServiceTypes()
 	if err != nil {
 		return
 	}

@@ -14,7 +14,7 @@ const ScriptSourceLibraryCopy ScriptSource = 5
 
 type Service struct {
 	Id              uint             `json:"id" gorm:"primarykey"`
-	IconCode        string           `json:"icon_code"`
+	Uuid            string           `json:"uuid"`
 	Name            string           `json:"name"`
 	Desc            string           `json:"desc"`
 	Address         string           `json:"address"`
@@ -24,33 +24,28 @@ type Service struct {
 }
 
 type ServiceType struct {
-	Id                 uint                `json:"id" gorm:"primarykey"`
-	Name               string              `json:"name"`
-	Icon               string              `json:"icon"`
-	Services           []Service           `gorm:"foreignkey:ServiceTypeId"`
-	ScriptServiceTypes []ScriptServiceType `gorm:"foreignkey:ServiceTypeId"`
-}
-
-type ScriptServiceType struct {
-	Id            uint   `json:"id" gorm:"primarykey"`
-	ScriptId      uint   `json:"script_id"`
-	ServiceTypeId uint   `json:"service_type_id"`
-	Name          string `json:"name"`
+	Id        uint      `json:"id" gorm:"primarykey"`
+	Uuid      string    `json:"uuid"`
+	IconCode  string    `json:"icon_code"`
+	Name      string    `json:"name"`
+	DescShort string    `json:"desc_short"`
+	DescLong  string    `json:"desc_long"`
+	Local     bool      `json:"local"`
+	Services  []Service `gorm:"foreignkey:ServiceTypeId"`
 }
 
 type Script struct {
-	Id                 uint                `json:"id" gorm:"primarykey"`
-	Uuid               string              `json:"uuid"`
-	Name               string              `json:"name"`
-	IconCode           string              `json:"icon_code"`
-	DescShort          string              `json:"desc_short"`
-	DescLong           string              `json:"desc_long"`
-	Source             ScriptSource        `json:"source"`
-	Parent             string              `json:"parent"`
-	Created            time.Time           `json:"created"`
-	ScriptServiceTypes []ScriptServiceType `gorm:"foreignkey:ScriptId"`
-	Versions           []Version           `gorm:"foreignkey:ScriptId"`
-	ScriptTag          []ScriptTag         `gorm:"foreignkey:ScriptId"`
+	Id        uint         `json:"id" gorm:"primarykey"`
+	Uuid      string       `json:"uuid"`
+	Name      string       `json:"name"`
+	IconCode  string       `json:"icon_code"`
+	DescShort string       `json:"desc_short"`
+	DescLong  string       `json:"desc_long"`
+	Source    ScriptSource `json:"source"`
+	Parent    string       `json:"parent"`
+	Created   time.Time    `json:"created"`
+	Versions  []Version    `gorm:"foreignkey:ScriptId"`
+	ScriptTag []ScriptTag  `gorm:"foreignkey:ScriptId"`
 }
 
 type Version struct {
