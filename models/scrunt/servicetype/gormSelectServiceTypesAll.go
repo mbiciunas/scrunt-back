@@ -7,7 +7,6 @@ import (
 )
 
 type GormServiceType struct {
-	Id        uint
 	Uuid      string
 	Directory string
 	Filename  string
@@ -17,11 +16,10 @@ type GormServiceType struct {
 	Local     bool
 }
 
-func GormSelectScriptsAll() ([]GormServiceType, error) {
+func GormSelectServiceTypesAll() ([]GormServiceType, error) {
 	var query strings.Builder
 
-	query.WriteString("SELECT st.id, ")
-	query.WriteString("       st.uuid, ")
+	query.WriteString("SELECT st.uuid, ")
 	query.WriteString("       i.directory, ")
 	query.WriteString("       i.filename, ")
 	query.WriteString("       st.name, ")
@@ -30,7 +28,7 @@ func GormSelectScriptsAll() ([]GormServiceType, error) {
 	query.WriteString("       st.local ")
 	query.WriteString("FROM service_types AS st ")
 	query.WriteString("LEFT OUTER JOIN icons AS i ")
-	query.WriteString("ON s.icon_code = i.code ")
+	query.WriteString("ON st.icon_code = i.code ")
 
 	var output []GormServiceType
 	result := scrunt.GormDB.Raw(query.String()).Scan(&output)
